@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:drawable="@color/splashscreen_bg"/>
+
+    <item
+        android:width="201dp"
+        android:height="201dp"
+        android:drawable="@mipmap/icon"
+        android:gravity="center" />
+
+</layer-list>
+
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent">-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/icon"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="201dp"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:src="@mipmap/icon" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/title"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/icon"-->
+<!--        android:gravity="center"-->
+<!--        android:text="COVID-19"-->
+<!--        android:textColor="#000000"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold">-->
+
+<!--    </TextView>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/subTitle"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/title"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/tag_name"-->
+<!--        android:textColor="#000000"-->
+<!--        android:textSize="18sp">-->
+
+<!--    </TextView>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/slogan"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginBottom="24dp"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/copy_right"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="17sp">-->
+
+<!--    </TextView>-->
+
+<!--</RelativeLayout>-->

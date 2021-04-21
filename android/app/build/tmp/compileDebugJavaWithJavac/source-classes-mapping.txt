@@ -1,0 +1,16 @@
+com/react_covid_19/BuildConfig.java
+ com.react_covid_19.BuildConfig
+com/react_covid_19/SplashActivity.java
+ com.react_covid_19.SplashActivity
+com/react_covid_19/ReactNativeFlipper.java
+ com.react_covid_19.ReactNativeFlipper
+ com.react_covid_19.ReactNativeFlipper$1
+ com.react_covid_19.ReactNativeFlipper$2
+ com.react_covid_19.ReactNativeFlipper$2$1
+com/react_covid_19/MainActivity.java
+ com.react_covid_19.MainActivity
+com/react_covid_19/MainApplication.java
+ com.react_covid_19.MainApplication
+ com.react_covid_19.MainApplication$1
+com/facebook/react/PackageList.java
+ com.facebook.react.PackageList
