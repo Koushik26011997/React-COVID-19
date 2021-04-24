@@ -8,6 +8,7 @@ import Datewise from '../screens/Datewise';
 import Districtwise from '../screens/Districtwise';
 import Chart from '../screens/Chart';
 import { TAB_BAR_ICON_SIZE } from '../Constant';
+import Vaccine from '../screens/Vaccine';
 
 const BottomTab = createMaterialBottomTabNavigator();
 
@@ -35,7 +36,7 @@ const BottomTabNav = ({ navigation }) => {
                 ),
             }} />
 
-            <BottomTab.Screen name="Districtwise" component={Districtwise} options={{
+            <BottomTab.Screen name="Districtwise" component={Vaccine} options={{
                 tabBarLabel: 'Districts',
                 tabBarColor: '#28a745',
                 tabBarIcon: ({ color }) => (
