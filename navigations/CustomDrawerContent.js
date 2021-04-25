@@ -46,6 +46,10 @@ const arr = [
     label: 'World Meter',
     page: 'Worldmeter',
   },
+  {
+    label: 'COWIN Vaccine',
+    page: 'Vaccine',
+  },
 ];
 
 const CustomDrawerContent = props => {

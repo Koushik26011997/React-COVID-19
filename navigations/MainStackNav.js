@@ -11,6 +11,7 @@ import Update from '../screens/Update';
 import News from '../screens/News';
 import StateDetails from '../screens/StateDetails';
 import Worldmeter from '../screens/Worldmeter';
+import Vaccine from '../screens/Vaccine';
 
 const MainStack = createStackNavigator();
 
@@ -110,6 +111,15 @@ const MainStackNav = ({navigation}) => {
           options={{
             ...options,
             headerTitle: 'World Meter',
+          }}
+        />
+
+        <MainStack.Screen
+          name="Vaccine"
+          component={Vaccine}
+          options={{
+            ...options,
+            headerTitle: 'COWIN Vaccine',
           }}
         />
       </MainStack.Navigator>

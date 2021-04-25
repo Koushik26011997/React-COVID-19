@@ -1,5 +1,13 @@
-import React, {useEffect} from 'react';
-import {View, StyleSheet, Image, Linking, Text, FlatList} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  TextInput,
+  Dimensions,
+  TouchableOpacity,
+  Keyboard,
+} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Rtext} from '../common/Rtext';
 import {ANIM_DURATION} from '../Constant';
@@ -8,13 +16,14 @@ import {useTheme} from '@react-navigation/native';
 import {request} from '../service/common';
 import {CustomHeader} from '../common/Header';
 import Spinner from 'react-native-loading-spinner-overlay';
-
-// https://coronavirus-19-api.herokuapp.com/countries
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Worldmeter = ({navigation}) => {
   const [loader, setLoader] = React.useState(false);
   const [data, setData] = React.useState([]);
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
   const {colors, custom} = useTheme();
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     getCurrentUpdateData();
@@ -29,12 +38,27 @@ const Worldmeter = ({navigation}) => {
         true,
       );
       await setData(response.data);
-      // console.log(response.data);
+      await setFilteredDataSource(response.data);
       setLoader(false);
     } catch (e) {
       setLoader(false);
       console.log(e);
       showFlashMessage(e, '', 'danger');
+    }
+  };
+
+  const searchCountry = text => {
+    const formattedQuery = text.toLowerCase();
+    if (formattedQuery) {
+      const tempData = data.filter(item => {
+        return item.country.toString().toLowerCase().includes(formattedQuery);
+      });
+      setSearchText(text);
+      setFilteredDataSource(tempData);
+    } else {
+      setSearchText('');
+      Keyboard.dismiss();
+      setFilteredDataSource(data);
     }
   };
 
@@ -45,14 +69,55 @@ const Worldmeter = ({navigation}) => {
       ) : (
         <FlatList
           ListHeaderComponent={
-            <CustomHeader
-              style={{margin: 12}}
-              text="World Meter!"></CustomHeader>
+            // <CustomHeader
+            //   style={{margin: 12}}
+            //   text="World Meter!"></CustomHeader>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                borderColor: colors.primary,
+                borderWidth: 1,
+                borderRadius: 8,
+                margin: 8,
+              }}>
+              <TextInput
+                value={searchText}
+                style={{
+                  height: 42,
+                  paddingLeft: 8,
+                  width: Dimensions.get('window').width - 36,
+                  fontFamily: 'LatoRegular',
+                  fontSize: 16,
+                  color: colors.text,
+                }}
+                placeholder="Search by country name"
+                placeholderTextColor="gray"
+                onChangeText={text => searchCountry(text)}
+              />
+              <TouchableOpacity style={{marginRight: 8}}>
+                <Icon name="magnify" color={colors.text} size={26}></Icon>
+              </TouchableOpacity>
+            </View>
           }
           ListFooterComponent={<View style={{height: 10}}></View>}
-          data={data}
+          data={filteredDataSource}
           keyExtractor={item => item.country}
           showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 12,
+              }}>
+              <Rtext style={{color: colors.text}}>
+                Sorry, No Country Found
+              </Rtext>
+            </View>
+          }
           renderItem={({item, index}) => {
             return (
               <Animatable.View

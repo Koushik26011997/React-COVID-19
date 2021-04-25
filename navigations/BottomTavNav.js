@@ -51,7 +51,7 @@ const BottomTabNav = ({navigation}) => {
 
       <BottomTab.Screen
         name="Districtwise"
-        component={Vaccine}
+        component={Districtwise}
         options={{
           tabBarLabel: 'Districts',
           tabBarColor: '#28a745',
