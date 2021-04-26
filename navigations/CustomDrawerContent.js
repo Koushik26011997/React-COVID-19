@@ -25,7 +25,10 @@ const arr = [
     label: 'Home',
     page: 'Home',
   },
-
+  {
+    label: 'Resources',
+    page: 'Resources',
+  },
   {
     label: 'FAQ',
     page: 'FAQ',
