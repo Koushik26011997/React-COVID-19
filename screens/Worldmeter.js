@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Rtext} from '../common/Rtext';
-import {ANIM_DURATION} from '../Constant';
+import {ANIM_DURATION, CARD_ELEVATION} from '../Constant';
 import {formatNumber, openUrl, showFlashMessage} from '../utility/MyUtility';
 import {useTheme} from '@react-navigation/native';
 import {request} from '../service/common';
@@ -87,7 +87,7 @@ const Worldmeter = ({navigation}) => {
                 value={searchText}
                 style={{
                   height: 42,
-                  paddingLeft: 8,
+                  paddingLeft: 12,
                   width: Dimensions.get('window').width - 36,
                   fontFamily: 'LatoRegular',
                   fontSize: 16,
@@ -123,7 +123,22 @@ const Worldmeter = ({navigation}) => {
               <Animatable.View
                 animation="bounceIn"
                 duration={ANIM_DURATION}
-                style={{marginBottom: 6, padding: 8}}>
+                style={{
+                  marginHorizontal: 6,
+                  width: Dimensions.get('window').width - 12,
+                  padding: 6,
+                  marginBottom: 6,
+                  elevation: CARD_ELEVATION,
+                  shadowColor: colors.card,
+                  shadowOffset: {
+                    width: 0,
+                    height: 10,
+                  },
+                  shadowOpacity: 0.3,
+                  shadowRadius: 20,
+                  backgroundColor: colors.card,
+                  borderRadius: 3,
+                }}>
                 <Rtext style={{textAlign: 'center', color: colors.text}}>
                   {item.country + ' [' + formatNumber(item.cases) + ']'}
                 </Rtext>
@@ -194,7 +209,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   viewStyle: {
-    marginHorizontal: 16,
+    marginHorizontal: 6,
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginVertical: 3,

@@ -3,13 +3,14 @@ import {View, StyleSheet, FlatList, Dimensions} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {CustomHeader} from '../common/Header';
 import {Rtext} from '../common/Rtext';
-import {ANIM_DURATION} from '../Constant';
+import {ANIM_DURATION, TAB_BAR_ICON_SIZE} from '../Constant';
 import {request} from '../service/common';
 import {showFlashMessage} from '../utility/MyUtility';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Spinner from 'react-native-loading-spinner-overlay';
 import moment from 'moment';
 import {useTheme} from '@react-navigation/native';
+import {CARD_ELEVATION} from '../Constant';
 
 const Update = ({navigation}) => {
   const [loader, setLoader] = React.useState(false);
@@ -33,47 +34,50 @@ const Update = ({navigation}) => {
     }
   };
 
+  const Separator = () => {
+    <View style={{backgroundColor: colors.text, height: 0.6}}></View>;
+  };
   return (
     <View style={styles.container}>
       {loader ? (
         <Spinner visible={loader} />
       ) : (
         <FlatList
-          ListHeaderComponent={
-            <CustomHeader
-              style={{margin: 12}}
-              text="Current Updates!"></CustomHeader>
-          }
-          ListFooterComponent={<View style={{height: 10}}></View>}
           data={data}
           keyExtractor={item => item.timestamp}
           showsVerticalScrollIndicator={false}
+          ListHeaderComponent={<View style={{marginTop: 6}}></View>}
           renderItem={({item, index}) => {
             return (
               <Animatable.View
                 animation="bounceIn"
                 duration={ANIM_DURATION}
-                style={{marginBottom: 6}}>
+                style={{
+                  elevation: CARD_ELEVATION,
+                  marginBottom: 6,
+                  shadowColor: colors.card,
+                  shadowOffset: {
+                    width: 0,
+                    height: 10,
+                  },
+                  shadowOpacity: 0.3,
+                  shadowRadius: 20,
+                  backgroundColor: colors.card,
+                  borderRadius: 3,
+                }}>
                 <View
                   style={{
-                    paddingVertical: 6,
+                    padding: 6,
                     flexDirection: 'row',
-                    width: Dimensions.get('window').width - 20,
+                    width: Dimensions.get('window').width - 8,
                   }}>
-                  <Icon
-                    size={16}
-                    color={colors.text}
-                    name="update"
-                    style={{marginRight: 3}}
-                  />
                   <View>
                     <Rtext
                       style={{
                         marginRight: 16,
-                        fontSize: 14,
                         color: colors.text,
                       }}>
-                      {item.update}
+                      {index + 1}. {item.update}
                     </Rtext>
                     <Rtext
                       style={{
@@ -88,8 +92,6 @@ const Update = ({navigation}) => {
                     </Rtext>
                   </View>
                 </View>
-                <View
-                  style={{backgroundColor: colors.text, height: 0.6}}></View>
               </Animatable.View>
             );
           }}></FlatList>

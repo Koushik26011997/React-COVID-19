@@ -6,6 +6,7 @@ import {
   FlatList,
   Dimensions,
   TouchableOpacity,
+  Text,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Rtext} from '../common/Rtext';
@@ -16,6 +17,7 @@ import {CustomHeader} from '../common/Header';
 import {request} from '../service/common';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {CARD_ELEVATION} from '../Constant';
 
 // https://api.covid19india.org/crowdsourced_resources_links.json
 
@@ -37,7 +39,6 @@ const Resources = ({navigation}) => {
         true,
       );
       await setData(response.data.crowdsourcd_resources_links);
-      console.log(response.data.crowdsourcd_resources_links);
       setLoader(false);
     } catch (e) {
       setLoader(false);
@@ -50,8 +51,7 @@ const Resources = ({navigation}) => {
     <View
       style={{
         flex: 1,
-        justifyContent: 'flex-start',
-        backgroundColor: colors.background,
+        justifyContent: 'center',
       }}>
       {loader ? (
         <Spinner visible={loader} />
@@ -59,11 +59,36 @@ const Resources = ({navigation}) => {
         <>
           <FlatList
             ListHeaderComponent={
-              <CustomHeader
-                style={{margin: 12}}
-                text="The objective of this page is to help people gain access to vital resources by sharing information only. However, we request the beneficiaries to use their discretion and verify the leads on their own before taking any action. If you find inaccurate information or any lead engaging in illegal practices, kindly inform us at hello@covid19india.org. We will take it down as soon as possible. We will not be responsible for the actions you take using the information on this page. We are just mediating information and are no way responsible for what is being shared. Please avoid sharing and contacting black market resources. We strongly encourage to AVOID black market."></CustomHeader>
+              <Animatable.View
+                animation="bounceIn"
+                duration={ANIM_DURATION}
+                style={{
+                  padding: 6,
+                  margin: 6,
+                  elevation: CARD_ELEVATION,
+                  shadowColor: colors.card,
+                  shadowOffset: {
+                    width: 0,
+                    height: 10,
+                  },
+                  shadowOpacity: 0.3,
+                  shadowRadius: 20,
+                  backgroundColor: colors.card,
+                  borderRadius: 3,
+                }}>
+                <Text
+                  style={{
+                    fontFamily: 'LatoBold',
+                    fontSize: 16,
+                    lineHeight: 24,
+                    color: colors.text,
+                  }}>
+                  ***The objective of this page is to help people gain access to
+                  vital resources by sharing information only. We strongly
+                  encourage to AVOID black market.
+                </Text>
+              </Animatable.View>
             }
-            ListFooterComponent={<View style={{height: 10}}></View>}
             data={data}
             keyExtractor={item => item.link}
             showsVerticalScrollIndicator={false}
@@ -73,14 +98,24 @@ const Resources = ({navigation}) => {
                   animation="bounceIn"
                   duration={ANIM_DURATION}
                   style={{
-                    paddingHorizontal: 12,
-                    paddingVertical: 8,
-                    width: Dimensions.get('window').width,
+                    padding: 6,
+                    marginBottom: 6,
+                    marginHorizontal: 6,
+                    elevation: CARD_ELEVATION,
+                    shadowColor: colors.card,
+                    shadowOffset: {
+                      width: 0,
+                      height: 10,
+                    },
+                    shadowOpacity: 0.3,
+                    shadowRadius: 20,
+                    backgroundColor: colors.card,
+                    borderRadius: 3,
                   }}>
                   <TouchableOpacity onPress={() => openUrl(item.link)}>
                     <View style={{flexDirection: 'row'}}>
                       <Icon
-                        size={14}
+                        size={16}
                         color={custom.confirm}
                         name="cards-heart"
                         style={{marginRight: 3}}
@@ -88,7 +123,6 @@ const Resources = ({navigation}) => {
                       <Rtext
                         style={{
                           marginRight: 6,
-                          fontSize: 14,
                           paddingRight: 8,
                           color: colors.text,
                         }}>
@@ -98,9 +132,9 @@ const Resources = ({navigation}) => {
                     <Rtext
                       style={{
                         marginRight: 6,
-                        fontSize: 14,
+                        marginTop: 3,
                         paddingRight: 8,
-                        color: colors.text,
+                        color: custom.answer,
                       }}>
                       {'=> ' + item.link}
                     </Rtext>
