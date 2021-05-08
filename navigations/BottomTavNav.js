@@ -9,6 +9,7 @@ import Districtwise from '../screens/Districtwise';
 import Chart from '../screens/Chart';
 import {BASE_URL, TAB_BAR_ICON_SIZE} from '../Constant';
 import Vaccine from '../screens/Vaccine';
+import Update from '../screens/Update';
 
 const BottomTab = createMaterialBottomTabNavigator();
 
@@ -67,7 +68,7 @@ const BottomTabNav = ({navigation}) => {
         }}
       />
 
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Chart"
         component={Chart}
         options={{
@@ -76,6 +77,20 @@ const BottomTabNav = ({navigation}) => {
           tabBarIcon: ({color}) => (
             <TouchableOpacity>
               <Icon size={TAB_BAR_ICON_SIZE} color="white" name="finance" />
+            </TouchableOpacity>
+          ),
+        }}
+      /> */}
+
+      <BottomTab.Screen
+        name="Update"
+        component={Update}
+        options={{
+          tabBarLabel: 'Updates',
+          tabBarColor: '#6c757d',
+          tabBarIcon: ({color}) => (
+            <TouchableOpacity>
+              <Icon size={TAB_BAR_ICON_SIZE} color="white" name="update" />
             </TouchableOpacity>
           ),
         }}

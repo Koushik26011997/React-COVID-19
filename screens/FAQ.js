@@ -37,6 +37,9 @@ const FAQ = ({navigation}) => {
                 shadowRadius: 20,
                 backgroundColor: colors.card,
                 borderRadius: 3,
+
+                borderColor: colors.primary,
+                borderWidth: 0.6,
               }}>
               <View style={{flexDirection: 'row'}}>
                 <Icon

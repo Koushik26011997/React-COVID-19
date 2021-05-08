@@ -51,6 +51,7 @@ const Districtwise = ({navigation}) => {
   }, [refreshing]);
 
   useEffect(() => {
+    setshowDistricts(-1);
     LogBox.ignoreAllLogs();
     getCurrentData();
   }, [navigation]);
@@ -69,7 +70,11 @@ const Districtwise = ({navigation}) => {
   };
 
   const show = index => {
-    setshowDistricts(prevState => (prevState === -1 ? index : -1));
+    if (index != -1) {
+      setshowDistricts(index);
+    } else {
+      setshowDistricts(-1);
+    }
   };
 
   return (
@@ -122,8 +127,11 @@ const Districtwise = ({navigation}) => {
                         duration={ANIM_DURATION}>
                         <Rtext
                           style={[
-                            styles.flatListRow,
-                            {fontWeight: 'bold', color: colors.text},
+                            {
+                              fontWeight: 'bold',
+                              color: colors.text,
+                              width: devWidth / 5 + 20,
+                            },
                           ]}>
                           DISTRICT
                         </Rtext>
@@ -186,8 +194,9 @@ const Districtwise = ({navigation}) => {
                           animation="bounceIn"
                           duration={ANIM_DURATION}>
                           <Rtext
-                            style={[styles.flatListRow, {color: colors.text}]}
-                            numberOfLines={1}>
+                            style={[
+                              {color: colors.text, width: devWidth / 5 + 20},
+                            ]}>
                             {item.district}
                           </Rtext>
 

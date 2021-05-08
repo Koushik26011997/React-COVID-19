@@ -75,6 +75,9 @@ const Resources = ({navigation}) => {
                   shadowRadius: 20,
                   backgroundColor: colors.card,
                   borderRadius: 3,
+
+                  borderColor: colors.primary,
+                  borderWidth: 0.6,
                 }}>
                 <Text
                   style={{
@@ -111,6 +114,9 @@ const Resources = ({navigation}) => {
                     shadowRadius: 20,
                     backgroundColor: colors.card,
                     borderRadius: 3,
+
+                    borderColor: colors.primary,
+                    borderWidth: 0.6,
                   }}>
                   <TouchableOpacity onPress={() => openUrl(item.link)}>
                     <View style={{flexDirection: 'row'}}>

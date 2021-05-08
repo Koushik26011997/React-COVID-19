@@ -19,6 +19,7 @@ import * as Animatable from 'react-native-animatable';
 import {useTheme} from '@react-navigation/native';
 import {AuthContext} from '../service/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {DrawerItem} from '@react-navigation/drawer';
 
 const arr = [
   {
@@ -33,10 +34,10 @@ const arr = [
     label: 'FAQ',
     page: 'FAQ',
   },
-  {
-    label: 'Current Updates',
-    page: 'Update',
-  },
+  // {
+  //   label: 'Current Updates',
+  //   page: 'Update',
+  // },
   {
     label: 'Lockdown Protocols',
     page: 'Lockdown',
@@ -50,7 +51,7 @@ const arr = [
     page: 'Worldmeter',
   },
   {
-    label: 'COWIN Vaccine',
+    label: 'COWIN Vaccination',
     page: 'Vaccine',
   },
 ];
@@ -130,7 +131,7 @@ const CustomDrawerContent = props => {
           renderItem={({item, index}) => {
             return (
               <Animatable.View animation="bounceIn" duration={ANIM_DURATION}>
-                {item.page === page ? (
+                {/* {item.page === page ? (
                   <TouchableOpacity
                     onPress={() => clickOnProduct(item.page)}
                     style={{backgroundColor: colors.card}}>
@@ -144,7 +145,18 @@ const CustomDrawerContent = props => {
                       {item.label}
                     </Rtext>
                   </TouchableOpacity>
-                )}
+                )} */}
+
+                {/* <TouchableOpacity onPress={() => clickOnProduct(item.page)}> */}
+                {/* <Rtext style={[styles.rowStyle, {color: colors.text}]}>
+                    {item.label}
+                  </Rtext> */}
+
+                <DrawerItem
+                  label={item.label}
+                  labelStyle={[styles.rowStyle, {color: colors.text}]}
+                  onPress={() => clickOnProduct(item.page)}></DrawerItem>
+                {/* </TouchableOpacity> */}
               </Animatable.View>
             );
           }}></FlatList>
@@ -156,6 +168,8 @@ const CustomDrawerContent = props => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
+            marginStart: 18,
+            marginTop: 6,
           }}>
           <Rtext style={[styles.rowStyle, {color: colors.text}]}>
             Dark Theme
@@ -177,5 +191,5 @@ const CustomDrawerContent = props => {
 export default CustomDrawerContent;
 
 const styles = StyleSheet.create({
-  rowStyle: {padding: 16, fontSize: 15},
+  rowStyle: {fontSize: 16},
 });

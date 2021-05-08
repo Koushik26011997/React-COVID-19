@@ -1,7 +1,7 @@
 export const BASE_URL = 'https://api.covid19india.org/';
 export const ANIM_DURATION = 4000;
 export const TAB_BAR_ICON_SIZE = 24;
-export const CARD_ELEVATION = 3;
+export const CARD_ELEVATION = 0;
 
 export const FAQ_DATA = {
   factoids: [

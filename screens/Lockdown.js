@@ -37,9 +37,12 @@ const Lockdown = ({navigation}) => {
                 shadowRadius: 20,
                 backgroundColor: colors.card,
                 borderRadius: 3,
+
+                borderColor: colors.primary,
+                borderWidth: 0.6,
               }}>
               <Icon
-                size={14}
+                size={13}
                 color={colors.text}
                 name="checkbox-multiple-blank-circle"
                 style={{marginRight: 3}}

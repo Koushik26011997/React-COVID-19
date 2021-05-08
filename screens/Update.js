@@ -46,7 +46,18 @@ const Update = ({navigation}) => {
           data={data}
           keyExtractor={item => item.timestamp}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={<View style={{marginTop: 6}}></View>}
+          ListHeaderComponent={
+            <View
+              style={{
+                margin: 12,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Rtext style={{fontSize: 16, color: colors.text}}>
+                Total {data?.length} updates found
+              </Rtext>
+            </View>
+          }
           renderItem={({item, index}) => {
             return (
               <Animatable.View
@@ -64,6 +75,8 @@ const Update = ({navigation}) => {
                   shadowRadius: 20,
                   backgroundColor: colors.card,
                   borderRadius: 3,
+                  borderColor: colors.primary,
+                  borderWidth: 0.6,
                 }}>
                 <View
                   style={{
@@ -77,7 +90,7 @@ const Update = ({navigation}) => {
                         marginRight: 16,
                         color: colors.text,
                       }}>
-                      {index + 1}. {item.update}
+                      {'#' + (index + 1)}. {item.update}
                     </Rtext>
                     <Rtext
                       style={{

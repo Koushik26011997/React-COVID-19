@@ -280,8 +280,11 @@ const Home = ({navigation}) => {
                   duration={ANIM_DURATION}>
                   <Rtext
                     style={[
-                      styles.flatListRow,
-                      {fontWeight: 'bold', color: colors.text},
+                      {
+                        fontWeight: 'bold',
+                        color: colors.text,
+                        width: flatListRowWidth + 20,
+                      },
                     ]}>
                     STATE
                   </Rtext>
@@ -347,8 +350,9 @@ const Home = ({navigation}) => {
                     animation="bounceIn"
                     duration={ANIM_DURATION}>
                     <Rtext
-                      style={[styles.flatListRow, {color: colors.text}]}
-                      numberOfLines={1}>
+                      style={[
+                        {color: colors.text, width: flatListRowWidth + 20},
+                      ]}>
                       {item.state}
                     </Rtext>
 
