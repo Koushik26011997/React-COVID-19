@@ -24,6 +24,10 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import {ANIM_DURATION} from '../Constant';
 import {useTheme} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import Popover, {
+  PopoverMode,
+  PopoverPlacement,
+} from 'react-native-popover-view';
 
 const flatListRowWidth = Dimensions.get('window').width / 5;
 
@@ -411,6 +415,7 @@ const Home = ({navigation}) => {
             renderItem={({item, index}) => {
               return (
                 // <TouchableOpacity onPress={() => navigation.navigate('StateDetails', { statecode: item.statecode })}>
+
                 <View>
                   <Animatable.View
                     style={[
@@ -419,16 +424,43 @@ const Home = ({navigation}) => {
                     ]}
                     animation="bounceIn"
                     duration={ANIM_DURATION}>
-                    <Rtext
-                      style={[
-                        {
-                          color: colors.text,
-                          width: flatListRowWidth + 10,
-                          fontSize: 14.5,
-                        },
-                      ]}>
-                      {item.state + '\n' + '(Rank: #' + (index + 1) + ')'}
-                    </Rtext>
+                    {item.statenotes !== '' ? (
+                      <Popover
+                        backgroundStyle={{
+                          backgroundColor: colors.card,
+                        }}
+                        from={
+                          <TouchableOpacity
+                            style={[
+                              {
+                                color: colors.text,
+                                width: flatListRowWidth + 10,
+                              },
+                            ]}>
+                            <Rtext>
+                              {item.state +
+                                '*\n' +
+                                '(Rank: #' +
+                                (index + 1) +
+                                ')'}
+                            </Rtext>
+                          </TouchableOpacity>
+                        }>
+                        <Rtext style={{color: colors.text}}>
+                          {item.statenotes}
+                        </Rtext>
+                      </Popover>
+                    ) : (
+                      <Rtext
+                        style={[
+                          {
+                            color: colors.text,
+                            width: flatListRowWidth + 10,
+                          },
+                        ]}>
+                        {item.state + '\n' + '(Rank: #' + (index + 1) + ')'}
+                      </Rtext>
+                    )}
 
                     <View>
                       <Rtext

@@ -108,6 +108,15 @@ const About = ({navigation}) => {
             }
             . Please always stay connected with me.
           </Rtext>
+
+          <Rtext
+            style={{
+              color: colors.text,
+              fontSize: 16,
+              marginTop: 6,
+            }}>
+            Powered By &#169;KPTECH, 2021
+          </Rtext>
         </View>
       </ImageBackground>
     </View>

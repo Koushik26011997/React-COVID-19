@@ -36,7 +36,6 @@ const Datewise = ({navigation}) => {
   const [desc, setDesc] = React.useState(true);
 
   const setOrdering = type => {
-    console.log(type);
     if (type === sort) setDesc(!desc);
     else setDesc(true);
     setSort(type);
@@ -47,6 +46,7 @@ const Datewise = ({navigation}) => {
       setRefreshing(true);
       let response = await request('get', 'data.json');
       await setSort('date');
+      await setDesc(true);
       await setData(response.data);
       await setStateData(response.data.cases_time_series);
       setRefreshing(false);
@@ -76,6 +76,7 @@ const Datewise = ({navigation}) => {
       setLoader(true);
       let response = await request('get', 'data.json');
       await setSort('date');
+      await setDesc(true);
       await setData(response.data);
       await setStateData(response.data.cases_time_series);
       setLoader(false);
@@ -204,92 +205,93 @@ const Datewise = ({navigation}) => {
             </TouchableOpacity>
           </Animatable.View>
 
-          <Animatable.View
-            style={[styles.boxContainerRow, {backgroundColor: colors.card}]}
-            animation="bounceIn"
-            duration={ANIM_DURATION}>
-            <View>
-              <Rtext style={[styles.flatListRow, {color: colors.text}]}>
-                {moment().format('Do MMM, YYYY')}
-              </Rtext>
-              <Rtext style={[styles.flatListRow, {color: colors.text}]}>
-                ({moment().format('dddd')})
-              </Rtext>
-            </View>
+          {sort === 'date' && desc && (
+            <Animatable.View
+              style={[styles.boxContainerRow, {backgroundColor: colors.card}]}
+              animation="bounceIn"
+              duration={ANIM_DURATION}>
+              <View>
+                <Rtext style={[styles.flatListRow, {color: colors.text}]}>
+                  {moment().format('Do MMM, YYYY')}
+                </Rtext>
+                <Rtext style={[styles.flatListRow, {color: colors.text}]}>
+                  ({moment().format('dddd')})
+                </Rtext>
+              </View>
 
-            <View>
-              <Rtext
-                style={[
-                  styles.flatListRow,
-                  {textAlign: 'center', color: colors.text},
-                ]}>
-                {data.statewise && formatNumber(data.statewise[0].confirmed)}
-              </Rtext>
-              <Rtext
-                style={[
-                  styles.flatListRow,
-                  {color: custom.confirm, textAlign: 'center'},
-                ]}>
-                [+
-                {data.statewise &&
-                  formatNumber(data.statewise[0].deltaconfirmed)}
-                ]
-              </Rtext>
-            </View>
+              <View>
+                <Rtext
+                  style={[
+                    styles.flatListRow,
+                    {textAlign: 'center', color: colors.text},
+                  ]}>
+                  {data.statewise && formatNumber(data.statewise[0].confirmed)}
+                </Rtext>
+                <Rtext
+                  style={[
+                    styles.flatListRow,
+                    {color: custom.confirm, textAlign: 'center'},
+                  ]}>
+                  [+
+                  {data.statewise &&
+                    formatNumber(data.statewise[0].deltaconfirmed)}
+                  ]
+                </Rtext>
+              </View>
 
-            <View>
-              <Rtext
-                style={[
-                  styles.flatListRow,
-                  {textAlign: 'center', color: colors.text},
-                ]}>
-                {data.statewise && formatNumber(data.statewise[0].recovered)}
-              </Rtext>
-              <Rtext
-                style={[
-                  styles.flatListRow,
-                  {color: '#28a745', textAlign: 'center'},
-                ]}>
-                [+
-                {data.statewise &&
-                  formatNumber(data.statewise[0].deltarecovered)}
-                ]
-              </Rtext>
-            </View>
+              <View>
+                <Rtext
+                  style={[
+                    styles.flatListRow,
+                    {textAlign: 'center', color: colors.text},
+                  ]}>
+                  {data.statewise && formatNumber(data.statewise[0].recovered)}
+                </Rtext>
+                <Rtext
+                  style={[
+                    styles.flatListRow,
+                    {color: '#28a745', textAlign: 'center'},
+                  ]}>
+                  [+
+                  {data.statewise &&
+                    formatNumber(data.statewise[0].deltarecovered)}
+                  ]
+                </Rtext>
+              </View>
 
-            <View>
-              <Rtext
-                style={[
-                  styles.flatListRow,
-                  {textAlign: 'center', color: colors.text},
-                ]}>
-                {data.statewise && formatNumber(data.statewise[0].deaths)}
-              </Rtext>
-              <Rtext
-                style={[
-                  styles.flatListRow,
-                  {color: custom.death, textAlign: 'center'},
-                ]}>
-                [+
-                {data.statewise && formatNumber(data.statewise[0].deltadeaths)}]
-              </Rtext>
-            </View>
-          </Animatable.View>
+              <View>
+                <Rtext
+                  style={[
+                    styles.flatListRow,
+                    {textAlign: 'center', color: colors.text},
+                  ]}>
+                  {data.statewise && formatNumber(data.statewise[0].deaths)}
+                </Rtext>
+                <Rtext
+                  style={[
+                    styles.flatListRow,
+                    {color: custom.death, textAlign: 'center'},
+                  ]}>
+                  [+
+                  {data.statewise &&
+                    formatNumber(data.statewise[0].deltadeaths)}
+                  ]
+                </Rtext>
+              </View>
+            </Animatable.View>
+          )}
 
           <FlatList
-            // data={stateData}
-
-            data={
-              sort === 'date'
-                ? desc
-                  ? data['cases_time_series'] &&
-                    data['cases_time_series'].reverse()
-                  : data['cases_time_series'] && data['cases_time_series']
-                : stateData.sort((a, b) => {
-                    if (desc) return parseInt(a[sort]) < parseInt(b[sort]);
-                    else return parseInt(a[sort]) > parseInt(b[sort]);
-                  })
-            }
+            data={stateData.sort((a, b) => {
+              if (sort === 'date') {
+                if (desc)
+                  return new Date(a['dateymd']) < new Date(b['dateymd']);
+                else return new Date(a['dateymd']) > new Date(b['dateymd']);
+              } else {
+                if (desc) return parseInt(a[sort]) < parseInt(b[sort]);
+                else return parseInt(a[sort]) > parseInt(b[sort]);
+              }
+            })}
             keyExtractor={item => item.dateymd}
             showsVerticalScrollIndicator={false}
             refreshControl={

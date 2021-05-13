@@ -11,6 +11,7 @@ import {
   Platform,
   ToastAndroid,
   Alert,
+  BackHandler,
 } from 'react-native';
 import {Rtext} from '../common/Rtext';
 import {ANIM_DURATION} from '../Constant';
@@ -18,7 +19,7 @@ import * as Animatable from 'react-native-animatable';
 import {useTheme} from '@react-navigation/native';
 import {AuthContext} from '../service/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {DrawerItem} from '@react-navigation/drawer';
+import {DrawerContent, DrawerItem} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const arr = [
@@ -62,6 +63,11 @@ const arr = [
     page: 'Vaccine',
     icon: 'needle',
   },
+  {
+    label: 'Exit',
+    page: 'Exit',
+    icon: 'logout',
+  },
 ];
 
 const CustomDrawerContent = props => {
@@ -100,8 +106,25 @@ const CustomDrawerContent = props => {
   };
 
   const clickOnProduct = page => {
-    setPage(page);
-    props.navigation.navigate(page);
+    if (page === 'Exit') {
+      Alert.alert(
+        'Exit App',
+        'Do you want to exit?',
+        [
+          {
+            text: 'No',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {text: 'Yes', onPress: () => BackHandler.exitApp()},
+        ],
+        {cancelable: false},
+      );
+      return true;
+    } else {
+      setPage(page);
+      props.navigation.navigate(page);
+    }
   };
 
   return (
@@ -111,8 +134,30 @@ const CustomDrawerContent = props => {
           source={require('../icons/head.png')}
           style={{
             height: Dimensions.get('window').height / 4,
-            width: Dimensions.get('window').width,
+            width: '100%',
           }}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../icons/icon.png')}
+              style={{
+                width: 120,
+                height: 120,
+                alignSelf: 'center',
+              }}></Image>
+            <Rtext
+              style={{
+                marginTop: 6,
+                color: 'white',
+              }}
+              numberOfLines={1}>
+              #STAY HOME | #STAY SAFE | #WEAR MASK
+            </Rtext>
+          </View>
           {/* <View style={{flexDirection: 'row'}}>
             <Image
               source={require('../icons/user.png')}
