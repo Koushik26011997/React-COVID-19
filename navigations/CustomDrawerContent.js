@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
-  TouchableOpacity,
   FlatList,
   Image,
   Dimensions,
@@ -20,39 +19,48 @@ import {useTheme} from '@react-navigation/native';
 import {AuthContext} from '../service/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {DrawerItem} from '@react-navigation/drawer';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const arr = [
   {
     label: 'Home',
     page: 'Home',
+    icon: 'home',
   },
   {
     label: 'Resources',
     page: 'Resources',
+    icon: 'cards-heart',
   },
   {
     label: 'FAQ',
     page: 'FAQ',
+    icon: 'help-circle',
   },
   // {
   //   label: 'Current Updates',
   //   page: 'Update',
+  //   icon: 'update',
   // },
   {
     label: 'Lockdown Protocols',
     page: 'Lockdown',
+    icon: 'protocol',
   },
   {
     label: 'COVID-19 News',
     page: 'News',
+    icon: 'newspaper',
   },
   {
     label: 'World Meter',
     page: 'Worldmeter',
+    icon: 'earth',
   },
   {
     label: 'COWIN Vaccination',
     page: 'Vaccine',
+    icon: 'needle',
   },
 ];
 
@@ -71,7 +79,8 @@ const CustomDrawerContent = props => {
       const value = await AsyncStorage.getItem('IsDarkTheme');
       value !== null ? setIsEnabled(true) : setIsEnabled(false);
     } catch (e) {
-      console.log('Error to get data');
+      setIsEnabled(false);
+      // console.log('Error to get data');
     }
   };
 
@@ -101,10 +110,10 @@ const CustomDrawerContent = props => {
         <ImageBackground
           source={require('../icons/head.png')}
           style={{
-            height: Dimensions.get('window').height / 5,
+            height: Dimensions.get('window').height / 4,
             width: Dimensions.get('window').width,
           }}>
-          <View style={{flexDirection: 'row'}}>
+          {/* <View style={{flexDirection: 'row'}}>
             <Image
               source={require('../icons/user.png')}
               style={{
@@ -121,42 +130,26 @@ const CustomDrawerContent = props => {
               numberOfLines={1}>
               Welcome User!!!
             </Rtext>
-          </View>
+          </View> */}
         </ImageBackground>
 
         <FlatList
-          style={{marginTop: 36}}
+          style={{marginTop: 6}}
           data={arr}
           keyExtractor={item => item.page.toString()}
           renderItem={({item, index}) => {
             return (
               <Animatable.View animation="bounceIn" duration={ANIM_DURATION}>
-                {/* {item.page === page ? (
-                  <TouchableOpacity
-                    onPress={() => clickOnProduct(item.page)}
-                    style={{backgroundColor: colors.card}}>
-                    <Rtext style={[styles.rowStyle, {color: colors.text}]}>
-                      {item.label}
-                    </Rtext>
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity onPress={() => clickOnProduct(item.page)}>
-                    <Rtext style={[styles.rowStyle, {color: colors.text}]}>
-                      {item.label}
-                    </Rtext>
-                  </TouchableOpacity>
-                )} */}
-
-                {/* <TouchableOpacity onPress={() => clickOnProduct(item.page)}> */}
-                {/* <Rtext style={[styles.rowStyle, {color: colors.text}]}>
-                    {item.label}
-                  </Rtext> */}
-
                 <DrawerItem
+                  icon={({color, size}) => (
+                    <Icon
+                      name={item.icon}
+                      size={24}
+                      style={{color: colors.text}}></Icon>
+                  )}
                   label={item.label}
                   labelStyle={[styles.rowStyle, {color: colors.text}]}
                   onPress={() => clickOnProduct(item.page)}></DrawerItem>
-                {/* </TouchableOpacity> */}
               </Animatable.View>
             );
           }}></FlatList>
@@ -169,7 +162,7 @@ const CustomDrawerContent = props => {
             alignItems: 'center',
             justifyContent: 'space-between',
             marginStart: 18,
-            marginTop: 6,
+            marginTop: 12,
           }}>
           <Rtext style={[styles.rowStyle, {color: colors.text}]}>
             Dark Theme

@@ -14,7 +14,6 @@ import {ANIM_DURATION, CARD_ELEVATION} from '../Constant';
 import {formatNumber, openUrl, showFlashMessage} from '../utility/MyUtility';
 import {useTheme} from '@react-navigation/native';
 import {request} from '../service/common';
-import {CustomHeader} from '../common/Header';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -69,10 +68,6 @@ const Worldmeter = ({navigation}) => {
       ) : (
         <FlatList
           ListHeaderComponent={
-            // <CustomHeader
-            //   style={{margin: 12}}
-            //   text="World Meter!"></CustomHeader>
-
             <View
               style={{
                 flexDirection: 'row',
@@ -86,9 +81,9 @@ const Worldmeter = ({navigation}) => {
               <TextInput
                 value={searchText}
                 style={{
-                  height: 42,
+                  height: 40,
                   paddingLeft: 12,
-                  width: Dimensions.get('window').width - 36,
+                  width: Dimensions.get('window').width - 42,
                   fontFamily: 'LatoRegular',
                   fontSize: 16,
                   color: colors.text,
@@ -97,8 +92,17 @@ const Worldmeter = ({navigation}) => {
                 placeholderTextColor="gray"
                 onChangeText={text => searchCountry(text)}
               />
-              <TouchableOpacity style={{marginRight: 8}}>
-                <Icon name="magnify" color={colors.text} size={26}></Icon>
+              <TouchableOpacity
+                style={{marginRight: 8}}
+                onPress={() => searchCountry('')}>
+                {searchText === '' ? (
+                  <Icon name="magnify" color={colors.text} size={24}></Icon>
+                ) : (
+                  <Icon
+                    name="close-circle"
+                    color={colors.text}
+                    size={24}></Icon>
+                )}
               </TouchableOpacity>
             </View>
           }

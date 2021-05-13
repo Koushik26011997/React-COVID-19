@@ -23,6 +23,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {ANIM_DURATION} from '../Constant';
 import {useTheme} from '@react-navigation/native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const flatListRowWidth = Dimensions.get('window').width / 5;
 
@@ -35,6 +36,8 @@ const Home = ({navigation}) => {
   const [loader, setLoader] = React.useState(false);
   const [data, setData] = React.useState({});
   const [stateData, setStateData] = React.useState([]);
+  const [sort, setSort] = React.useState('confirmed');
+  const [desc, setDesc] = React.useState(true);
 
   const onRefresh = React.useCallback(async () => {
     try {
@@ -75,6 +78,12 @@ const Home = ({navigation}) => {
       console.log(e);
       showFlashMessage(e, '', 'danger');
     }
+  };
+
+  const setOrdering = type => {
+    if (type === sort) setDesc(!desc);
+    else setDesc(true);
+    setSort(type);
   };
 
   return (
@@ -281,61 +290,122 @@ const Home = ({navigation}) => {
                   <Rtext
                     style={[
                       {
+                        marginLeft: 6,
                         fontWeight: 'bold',
                         color: colors.text,
-                        width: flatListRowWidth + 20,
+                        width: flatListRowWidth + 10,
+                        fontSize: 14,
                       },
                     ]}>
                     STATE
                   </Rtext>
-                  <Rtext
-                    style={[
-                      styles.flatListRow,
-                      {
-                        textAlign: 'center',
-                        fontWeight: 'bold',
-                        color: colors.text,
-                      },
-                    ]}>
-                    CNF
-                  </Rtext>
-                  <Rtext
-                    style={[
-                      styles.flatListRow,
-                      {
-                        textAlign: 'center',
-                        fontWeight: 'bold',
-                        color: colors.text,
-                      },
-                    ]}>
-                    ACT
-                  </Rtext>
-                  <Rtext
-                    style={[
-                      styles.flatListRow,
-                      {
-                        textAlign: 'center',
-                        fontWeight: 'bold',
-                        color: colors.text,
-                      },
-                    ]}>
-                    RCV
-                  </Rtext>
-                  <Rtext
-                    style={[
-                      styles.flatListRow,
-                      {
-                        textAlign: 'center',
-                        fontWeight: 'bold',
-                        color: colors.text,
-                      },
-                    ]}>
-                    DEC
-                  </Rtext>
+                  <TouchableOpacity
+                    onPress={() => setOrdering('confirmed')}
+                    style={
+                      sort === 'confirmed'
+                        ? [styles.selectedBlock, {backgroundColor: '#A7A7A7'}]
+                        : styles.selectedBlock
+                    }>
+                    <Icon
+                      size={20}
+                      color={colors.text}
+                      name="swap-vertical-circle"
+                    />
+                    <Rtext
+                      style={[
+                        {
+                          fontSize: 14,
+                          marginLeft: 3,
+                          textAlign: 'center',
+                          fontWeight: 'bold',
+                          color: colors.text,
+                        },
+                      ]}>
+                      CNF
+                    </Rtext>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => setOrdering('active')}
+                    style={
+                      sort === 'active'
+                        ? [styles.selectedBlock, {backgroundColor: '#A7A7A7'}]
+                        : styles.selectedBlock
+                    }>
+                    <Icon
+                      size={20}
+                      color={colors.text}
+                      name="swap-vertical-circle"
+                    />
+                    <Rtext
+                      style={[
+                        {
+                          fontSize: 14,
+                          marginLeft: 3,
+                          textAlign: 'center',
+                          fontWeight: 'bold',
+                          color: colors.text,
+                        },
+                      ]}>
+                      ACT
+                    </Rtext>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => setOrdering('recovered')}
+                    style={
+                      sort === 'recovered'
+                        ? [styles.selectedBlock, {backgroundColor: '#A7A7A7'}]
+                        : styles.selectedBlock
+                    }>
+                    <Icon
+                      size={20}
+                      color={colors.text}
+                      name="swap-vertical-circle"
+                    />
+                    <Rtext
+                      style={[
+                        {
+                          fontSize: 14,
+                          marginLeft: 3,
+                          textAlign: 'center',
+                          fontWeight: 'bold',
+                          color: colors.text,
+                        },
+                      ]}>
+                      RCV
+                    </Rtext>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => setOrdering('deaths')}
+                    style={
+                      sort === 'deaths'
+                        ? [styles.selectedBlock, {backgroundColor: '#A7A7A7'}]
+                        : styles.selectedBlock
+                    }>
+                    <Icon
+                      size={20}
+                      color={colors.text}
+                      name="swap-vertical-circle"
+                    />
+                    <Rtext
+                      style={[
+                        {
+                          fontSize: 14,
+                          marginLeft: 3,
+                          textAlign: 'center',
+                          fontWeight: 'bold',
+                          color: colors.text,
+                        },
+                      ]}>
+                      DEC
+                    </Rtext>
+                  </TouchableOpacity>
                 </Animatable.View>
               </>
             }
-            data={stateData}
+            data={stateData.sort((a, b) => {
+              if (desc) return parseInt(a[sort]) < parseInt(b[sort]);
+              else return parseInt(a[sort]) > parseInt(b[sort]);
+            })}
             keyExtractor={item => item.statecode}
             showsVerticalScrollIndicator={false}
             renderItem={({item, index}) => {
@@ -351,9 +421,13 @@ const Home = ({navigation}) => {
                     duration={ANIM_DURATION}>
                     <Rtext
                       style={[
-                        {color: colors.text, width: flatListRowWidth + 20},
+                        {
+                          color: colors.text,
+                          width: flatListRowWidth + 10,
+                          fontSize: 14.5,
+                        },
                       ]}>
-                      {item.state}
+                      {item.state + '\n' + '(Rank: #' + (index + 1) + ')'}
                     </Rtext>
 
                     <View>
@@ -459,10 +533,12 @@ const styles = StyleSheet.create({
   },
   flatListRow: {width: flatListRowWidth - 10, fontSize: 14},
   boxStyleFour: {alignItems: 'center'},
-
-  // boxStyle: { backgroundColor: 'white', padding: 10, borderRadius: 8, alignItems: 'center', margin: 3 },
-  // boxContainer: { justifyContent: 'space-around', flexDirection: "row", backgroundColor: 'white', padding: 8, borderRadius: 8, margin: 3, elevation: 1 },
-  // boxContainerRow: { justifyContent: 'space-around', flexDirection: "row", padding: 8, margin: 3, borderRadius: 5, alignItems: 'center', backgroundColor: 'white' },
-  // flatListRow: { width: flatListRowWidth - 10, fontSize: 14 },
-  // boxStyleFour: { alignItems: 'center' },
+  selectedBlock: {
+    paddingVertical: 3,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: flatListRowWidth,
+    borderRadius: 6,
+  },
 });

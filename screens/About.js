@@ -1,5 +1,13 @@
 import React from 'react';
-import {View, StyleSheet, Image, Linking, Text} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  Linking,
+  Text,
+  ImageBackground,
+  Dimensions,
+} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Rtext} from '../common/Rtext';
 import {ANIM_DURATION} from '../Constant';
@@ -39,52 +47,69 @@ const About = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
-      <Animatable.View
-        style={{marginTop: 24}}
-        animation="bounceIn"
-        duration={ANIM_DURATION}>
-        <Image
-          source={require('../icons/kp.jpg')}
-          style={{height: 120, width: 120, borderRadius: 60}}></Image>
-      </Animatable.View>
-      <Text
+    <View>
+      <ImageBackground
+        source={require('../icons/back.png')}
         style={{
-          fontFamily: 'DancingScriptBold',
-          color: colors.text,
-          marginVertical: 16,
-          fontSize: 36,
-        }}>
-        Mr. Koushik Paul.{' '}
-      </Text>
-      <Rtext
-        style={{
-          marginTop: 20,
-          marginHorizontal: 8,
-          lineHeight: 30,
-          color: colors.text,
-        }}>
-        Hi, My name is Mr. Koushik Paul and I am a professional Android & React
-        Native App Developer holding MCA degree. I work to build dynamic apps at
-        Idiosys Technology PVT LTD, Kolkata. I have my work experience for 1.6
-        years. My Email ID:{' '}
-        {
+          height: Dimensions.get('window').height - 6,
+          width: Dimensions.get('window').width,
+        }}
+        resizeMode="contain">
+        <View
+          style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
+          <Animatable.View
+            style={{marginTop: 24}}
+            animation="bounceIn"
+            duration={ANIM_DURATION}>
+            <Image
+              source={require('../icons/kp.jpg')}
+              style={{
+                height: 140,
+                width: 140,
+                borderRadius: 70,
+                borderColor: 'white',
+                borderWidth: 2,
+              }}></Image>
+          </Animatable.View>
+          <Text
+            style={{
+              fontFamily: 'DancingScriptBold',
+              color: colors.text,
+              marginVertical: 16,
+              fontSize: 38,
+            }}>
+            Mr. Koushik Paul.
+          </Text>
           <Rtext
-            style={{color: '#007BFF', textDecorationLine: 'underline'}}
-            onPress={() => sendMail('itskoushikpaul@gmail.com')}>
-            itskoushikpaul@gmail.com
+            style={{
+              marginTop: 20,
+              marginHorizontal: 8,
+              lineHeight: 30,
+              color: colors.text,
+            }}>
+            Hi, My name is Mr. Koushik Paul and I am a professional Android &
+            React Native App Developer holding MCA degree. I work to build
+            dynamic apps at Idiosys Technology PVT LTD, Kolkata. I have my work
+            experience for 1.6 years. My Email ID:{' '}
+            {
+              <Rtext
+                style={{color: '#007BFF', textDecorationLine: 'underline'}}
+                onPress={() => sendMail('itskoushikpaul@gmail.com')}>
+                itskoushikpaul@gmail.com
+              </Rtext>
+            }{' '}
+            and my GitHub page link is:{' '}
+            {
+              <Rtext
+                style={{color: '#007BFF', textDecorationLine: 'underline'}}
+                onPress={() => openUrl('https://github.com/Koushik26011997/')}>
+                https://github.com/Koushik26011997/
+              </Rtext>
+            }
+            . Please always stay connected with me.
           </Rtext>
-        }{' '}
-        and my GitHub link is:{' '}
-        {
-          <Rtext
-            style={{color: '#007BFF', textDecorationLine: 'underline'}}
-            onPress={() => openUrl('https://github.com/Koushik26011997/')}>
-            https://github.com/Koushik26011997/
-          </Rtext>
-        }
-        . Please always stay connected with me.
-      </Rtext>
+        </View>
+      </ImageBackground>
     </View>
   );
 };

@@ -129,7 +129,7 @@ const MainStackNav = ({navigation}) => {
           component={Vaccine}
           options={{
             ...options,
-            headerTitle: 'COWIN Vaccine',
+            headerTitle: 'COWIN Vaccination',
           }}
         />
       </MainStack.Navigator>

@@ -18,6 +18,7 @@ import {formatNumber, showFlashMessage} from '../utility/MyUtility';
 import * as Animatable from 'react-native-animatable';
 import {ANIM_DURATION} from '../Constant';
 import {useTheme} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const devWidth = Dimensions.get('window').width;
 
@@ -27,6 +28,8 @@ const Districtwise = ({navigation}) => {
   const [loader, setLoader] = React.useState(false);
   const [data, setData] = React.useState([]);
   const [showDistricts, setshowDistricts] = React.useState(-1);
+  const [sort, setSort] = React.useState('confirmed');
+  const [desc, setDesc] = React.useState(true);
 
   const onRefresh = React.useCallback(async () => {
     try {
@@ -52,8 +55,13 @@ const Districtwise = ({navigation}) => {
 
   useEffect(() => {
     setshowDistricts(-1);
-    LogBox.ignoreAllLogs();
+
     getCurrentData();
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      setshowDistricts(-1);
+    });
+    return unsubscribe;
   }, [navigation]);
 
   const getCurrentData = async () => {
@@ -64,17 +72,25 @@ const Districtwise = ({navigation}) => {
       setLoader(false);
     } catch (e) {
       setLoader(false);
-      console.log(e);
+      // console.log(e);
       showFlashMessage(e, '', 'danger');
     }
   };
 
   const show = index => {
-    if (index != -1) {
+    if (index === showDistricts) {
+      setshowDistricts(-1);
+    } else if (index != -1) {
       setshowDistricts(index);
     } else {
       setshowDistricts(-1);
     }
+  };
+
+  const setOrdering = type => {
+    setSort(type);
+    if (type === sort) setDesc(!desc);
+    else setDesc(true);
   };
 
   return (
@@ -100,7 +116,14 @@ const Districtwise = ({navigation}) => {
                   borderWidth: 0.6,
                   margin: 3,
                 }}>
-                <TouchableOpacity onPress={() => show(index)}>
+                <TouchableOpacity
+                  onPress={() => show(index)}
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent:
+                      showDistricts !== index ? 'space-between' : 'center',
+                    alignItems: 'center',
+                  }}>
                   <Rtext
                     style={
                       showDistricts === index
@@ -114,14 +137,22 @@ const Districtwise = ({navigation}) => {
                     }>
                     {item.state}
                   </Rtext>
+                  {showDistricts !== index && (
+                    <Icon
+                      size={20}
+                      color={colors.text}
+                      name="arrow-right-circle"
+                    />
+                  )}
                 </TouchableOpacity>
+
                 {showDistricts === index && (
                   <FlatList
                     ListHeaderComponent={
                       <Animatable.View
                         style={[
                           styles.boxContainerRow,
-                          {marginTop: 6, backgroundColor: colors.card},
+                          {marginTop: 10, backgroundColor: colors.card},
                         ]}
                         animation="bounceIn"
                         duration={ANIM_DURATION}>
@@ -131,58 +162,131 @@ const Districtwise = ({navigation}) => {
                               fontWeight: 'bold',
                               color: colors.text,
                               width: devWidth / 5 + 20,
+                              fontSize: 14,
                             },
                           ]}>
                           DISTRICT
                         </Rtext>
-                        <Rtext
-                          style={[
-                            styles.flatListRow,
-                            {
-                              textAlign: 'center',
-                              fontWeight: 'bold',
-                              color: colors.text,
-                            },
-                          ]}>
-                          CNF
-                        </Rtext>
-                        <Rtext
-                          style={[
-                            styles.flatListRow,
-                            {
-                              textAlign: 'center',
-                              fontWeight: 'bold',
-                              color: colors.text,
-                            },
-                          ]}>
-                          ACT
-                        </Rtext>
-                        <Rtext
-                          style={[
-                            styles.flatListRow,
-                            {
-                              textAlign: 'center',
-                              fontWeight: 'bold',
-                              color: colors.text,
-                            },
-                          ]}>
-                          RCV
-                        </Rtext>
-                        <Rtext
-                          style={[
-                            styles.flatListRow,
-                            {
-                              textAlign: 'center',
-                              fontWeight: 'bold',
-                              color: colors.text,
-                            },
-                          ]}>
-                          DEC
-                        </Rtext>
+                        <TouchableOpacity
+                          onPress={() => setOrdering('confirmed')}
+                          style={
+                            sort === 'confirmed'
+                              ? [
+                                  styles.selectedBlock,
+                                  {backgroundColor: '#A7A7A7'},
+                                ]
+                              : styles.selectedBlock
+                          }>
+                          <Icon
+                            size={20}
+                            color={colors.text}
+                            name="swap-vertical-circle"
+                          />
+                          <Rtext
+                            style={[
+                              {
+                                fontSize: 14,
+                                marginLeft: 3,
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                                color: colors.text,
+                              },
+                            ]}>
+                            CNF
+                          </Rtext>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => setOrdering('active')}
+                          style={
+                            sort === 'active'
+                              ? [
+                                  styles.selectedBlock,
+                                  {backgroundColor: '#A7A7A7'},
+                                ]
+                              : styles.selectedBlock
+                          }>
+                          <Icon
+                            size={20}
+                            color={colors.text}
+                            name="swap-vertical-circle"
+                          />
+                          <Rtext
+                            style={[
+                              {
+                                fontSize: 14,
+                                marginLeft: 3,
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                                color: colors.text,
+                              },
+                            ]}>
+                            ACT
+                          </Rtext>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => setOrdering('recovered')}
+                          style={
+                            sort === 'recovered'
+                              ? [
+                                  styles.selectedBlock,
+                                  {backgroundColor: '#A7A7A7'},
+                                ]
+                              : styles.selectedBlock
+                          }>
+                          <Icon
+                            size={20}
+                            color={colors.text}
+                            name="swap-vertical-circle"
+                          />
+                          <Rtext
+                            style={[
+                              {
+                                fontSize: 14,
+                                marginLeft: 3,
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                                color: colors.text,
+                              },
+                            ]}>
+                            RCV
+                          </Rtext>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => setOrdering('deceased')}
+                          style={
+                            sort === 'deceased'
+                              ? [
+                                  styles.selectedBlock,
+                                  {backgroundColor: '#A7A7A7'},
+                                ]
+                              : styles.selectedBlock
+                          }>
+                          <Icon
+                            size={20}
+                            color={colors.text}
+                            name="swap-vertical-circle"
+                          />
+                          <Rtext
+                            style={[
+                              {
+                                fontSize: 14,
+                                marginLeft: 3,
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                                color: colors.text,
+                              },
+                            ]}>
+                            DEC
+                          </Rtext>
+                        </TouchableOpacity>
                       </Animatable.View>
                     }
                     showsVerticalScrollIndicator={false}
-                    data={item.districtData}
+                    // data={item.districtData}
+                    data={item.districtData.sort((a, b) => {
+                      if (desc) return parseInt(a[sort]) < parseInt(b[sort]);
+                      else return parseInt(a[sort]) > parseInt(b[sort]);
+                    })}
                     keyExtractor={item => item.district.toString()}
                     renderItem={({item, index}) => {
                       return (
@@ -195,9 +299,16 @@ const Districtwise = ({navigation}) => {
                           duration={ANIM_DURATION}>
                           <Rtext
                             style={[
-                              {color: colors.text, width: devWidth / 5 + 20},
+                              {
+                                color: colors.text,
+                                width: devWidth / 5 + 20,
+                              },
                             ]}>
-                            {item.district}
+                            {item.district +
+                              '\n' +
+                              '(Rank: #' +
+                              (index + 1) +
+                              ')'}
                           </Rtext>
 
                           <View>
@@ -280,7 +391,7 @@ const Districtwise = ({navigation}) => {
 export default Districtwise;
 
 const styles = StyleSheet.create({
-  flatListRow: {fontSize: 14, width: devWidth / 5 - 10},
+  flatListRow: {width: devWidth / 5 - 10, fontSize: 14},
   boxContainerRow: {
     justifyContent: 'space-around',
     flexDirection: 'row',
@@ -289,5 +400,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     backgroundColor: 'white',
+  },
+  selectedBlock: {
+    paddingVertical: 3,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: devWidth / 5 - 10,
+    borderRadius: 6,
   },
 });

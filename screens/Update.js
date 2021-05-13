@@ -92,17 +92,24 @@ const Update = ({navigation}) => {
                       }}>
                       {'#' + (index + 1)}. {item.update}
                     </Rtext>
-                    <Rtext
-                      style={{
-                        marginRight: 16,
-                        fontSize: 14,
-                        color: colors.text,
-                      }}>
-                      Last Updated on:{' '}
-                      {moment(item.timestamp * 1000).format(
-                        'Do MMMM, YYYY hh:mm A',
-                      )}
-                    </Rtext>
+
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Icon
+                        name="update"
+                        size={18}
+                        style={{color: colors.text}}></Icon>
+
+                      <Rtext
+                        style={{
+                          marginLeft: 3,
+                          color: colors.text,
+                        }}>
+                        Last updated on:{' '}
+                        {moment(item.timestamp * 1000).format(
+                          'Do MMMM, YYYY hh:mm A',
+                        )}
+                      </Rtext>
+                    </View>
                   </View>
                 </View>
               </Animatable.View>

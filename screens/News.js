@@ -97,6 +97,8 @@ const News = ({navigation}) => {
                   shadowRadius: 20,
                   backgroundColor: colors.card,
                   borderRadius: 3,
+                  borderWidth: 0.6,
+                  borderColor: colors.primary,
                 }}>
                 <View style={{flexDirection: 'row'}}>
                   <Image
@@ -108,7 +110,7 @@ const News = ({navigation}) => {
                       height: pageWidth / 4,
                       borderRadius: 3,
                     }}></Image>
-                  <View style={{width: pageWidth / 2, marginHorizontal: 6}}>
+                  <View style={{width: pageWidth / 2, marginHorizontal: 10}}>
                     <Rtext style={{fontWeight: 'bold', color: colors.text}}>
                       {item.title}
                     </Rtext>

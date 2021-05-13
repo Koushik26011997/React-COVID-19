@@ -132,7 +132,7 @@ const Resources = ({navigation}) => {
                           paddingRight: 8,
                           color: colors.text,
                         }}>
-                        {item.description}
+                        {item.description || 'Independent Aggregator'}
                       </Rtext>
                     </View>
                     <Rtext
