@@ -427,7 +427,7 @@ const Home = ({navigation}) => {
                     {item.statenotes !== '' ? (
                       <Popover
                         backgroundStyle={{
-                          backgroundColor: colors.card,
+                          backgroundColor: 'white',
                         }}
                         from={
                           <TouchableOpacity
@@ -437,7 +437,8 @@ const Home = ({navigation}) => {
                                 width: flatListRowWidth + 10,
                               },
                             ]}>
-                            <Rtext>
+                            <Rtext
+                              style={{color: colors.text, fontWeight: 'bold'}}>
                               {item.state +
                                 '*\n' +
                                 '(Rank: #' +
@@ -446,14 +447,13 @@ const Home = ({navigation}) => {
                             </Rtext>
                           </TouchableOpacity>
                         }>
-                        <Rtext style={{color: colors.text}}>
-                          {item.statenotes}
-                        </Rtext>
+                        <Rtext>{item.statenotes}</Rtext>
                       </Popover>
                     ) : (
                       <Rtext
                         style={[
                           {
+                            fontWeight: 'bold',
                             color: colors.text,
                             width: flatListRowWidth + 10,
                           },

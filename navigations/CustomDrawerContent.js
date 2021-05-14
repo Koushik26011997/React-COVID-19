@@ -108,7 +108,7 @@ const CustomDrawerContent = props => {
   const clickOnProduct = page => {
     if (page === 'Exit') {
       Alert.alert(
-        'Exit App',
+        'COVID-19 Tracker',
         'Do you want to exit?',
         [
           {
@@ -116,7 +116,7 @@ const CustomDrawerContent = props => {
             onPress: () => null,
             style: 'cancel',
           },
-          {text: 'Yes', onPress: () => BackHandler.exitApp()},
+          {text: 'Yes', onPress: () => closeApp()},
         ],
         {cancelable: false},
       );
@@ -125,6 +125,13 @@ const CustomDrawerContent = props => {
       setPage(page);
       props.navigation.navigate(page);
     }
+  };
+
+  const closeApp = () => {
+    props.navigation.closeDrawer();
+    setTimeout(() => {
+      BackHandler.exitApp();
+    }, 300);
   };
 
   return (

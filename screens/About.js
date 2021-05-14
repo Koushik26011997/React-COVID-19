@@ -111,9 +111,9 @@ const About = ({navigation}) => {
 
           <Rtext
             style={{
+              marginTop: 32,
               color: colors.text,
-              fontSize: 16,
-              marginTop: 6,
+              fontSize: 18,
             }}>
             Powered By &#169;KPTECH, 2021
           </Rtext>
