@@ -131,7 +131,7 @@ const CustomDrawerContent = props => {
     props.navigation.closeDrawer();
     setTimeout(() => {
       BackHandler.exitApp();
-    }, 300);
+    }, 500);
   };
 
   return (

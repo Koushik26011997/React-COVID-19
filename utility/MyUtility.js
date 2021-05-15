@@ -2,7 +2,9 @@ import {Dimensions, Platform, PixelRatio, Linking} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import moment from 'moment';
 
-const {width: SCREEN_WIDTH} = Dimensions.get('window');
+export const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get(
+  'window',
+);
 
 // based on iphone 5s's scale
 const scale = SCREEN_WIDTH / 320;
@@ -85,7 +87,22 @@ export const formatNumber = number => {
     return '';
   }
 };
+export const showYearMonthDay = dayCount => {
+  var start = moment();
+  var end = moment().add(+dayCount, 'days');
 
+  var years = end.diff(start, 'year');
+  start.add(years, 'years');
+
+  var months = end.diff(start, 'months');
+  start.add(months, 'months');
+
+  var days = end.diff(start, 'days');
+
+  return (
+    'Counting from ' + years + ' year ' + months + ' months ' + days + ' days'
+  );
+};
 export const timeDiff = startDateTime => {
   if (startDateTime !== '') {
     var startTime = moment(startDateTime, 'DD/MM/YYYY HH:mm');

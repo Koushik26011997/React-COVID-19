@@ -15,10 +15,18 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import {Rtext} from '../common/Rtext';
 import {ANIM_DURATION} from '../Constant';
 import {request} from '../service/common';
-import {formatNumber, showFlashMessage} from '../utility/MyUtility';
+import {
+  formatNumber,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+  showFlashMessage,
+  showYearMonthDay,
+} from '../utility/MyUtility';
 import moment from 'moment';
 import {useTheme} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {AuthContext} from '../service/context';
+import ViewShot from 'react-native-view-shot';
 
 const flatListRowWidth = Dimensions.get('window').width / 4;
 
@@ -26,6 +34,7 @@ const flatListRowWidth = Dimensions.get('window').width / 4;
 //https://api.covid19india.org/v4/min/data-2020-05-06.min.json
 
 const Datewise = ({navigation}) => {
+  const {viewContext} = React.useContext(AuthContext);
   const {colors, custom} = useTheme();
   const [refreshing, setRefreshing] = React.useState(false);
   const [loader, setLoader] = React.useState(false);
@@ -92,7 +101,15 @@ const Datewise = ({navigation}) => {
       {loader ? (
         <Spinner visible={loader} />
       ) : (
-        <>
+        <ViewShot
+          ref={viewContext}
+          options={{
+            format: 'jpg',
+            quality: 1,
+            width: SCREEN_WIDTH,
+            height: SCREEN_HEIGHT,
+          }}
+          style={{backgroundColor: colors.background}}>
           <View
             style={{
               margin: 12,
@@ -100,7 +117,8 @@ const Datewise = ({navigation}) => {
               alignItems: 'center',
             }}>
             <Rtext style={{fontSize: 16, color: colors.text}}>
-              Total {stateData?.length} day's record found
+              {/* Total {stateData?.length} day's record found */}
+              {showYearMonthDay(stateData?.length)}
             </Rtext>
           </View>
           <Animatable.View
@@ -379,7 +397,7 @@ const Datewise = ({navigation}) => {
                 </Animatable.View>
               );
             }}></FlatList>
-        </>
+        </ViewShot>
       )}
     </View>
   );

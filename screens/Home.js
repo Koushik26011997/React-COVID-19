@@ -18,16 +18,20 @@ import {
   openUrl,
   showFlashMessage,
   timeDiff,
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
 } from '../utility/MyUtility';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {ANIM_DURATION} from '../Constant';
 import {useTheme} from '@react-navigation/native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import Popover, {
   PopoverMode,
   PopoverPlacement,
 } from 'react-native-popover-view';
+import ViewShot from 'react-native-view-shot';
+import {AuthContext} from '../service/context';
 
 const flatListRowWidth = Dimensions.get('window').width / 5;
 
@@ -42,6 +46,8 @@ const Home = ({navigation}) => {
   const [stateData, setStateData] = React.useState([]);
   const [sort, setSort] = React.useState('confirmed');
   const [desc, setDesc] = React.useState(true);
+
+  const {viewContext} = React.useContext(AuthContext);
 
   const onRefresh = React.useCallback(async () => {
     try {
@@ -100,7 +106,15 @@ const Home = ({navigation}) => {
       {loader ? (
         <Spinner visible={loader} />
       ) : (
-        <>
+        <ViewShot
+          ref={viewContext}
+          options={{
+            format: 'jpg',
+            quality: 1,
+            width: SCREEN_WIDTH,
+            height: SCREEN_HEIGHT,
+          }}
+          style={{backgroundColor: colors.background}}>
           <Animatable.View
             style={[styles.boxContainer, {backgroundColor: colors.card}]}
             animation="bounceIn"
@@ -438,7 +452,10 @@ const Home = ({navigation}) => {
                               },
                             ]}>
                             <Rtext
-                              style={{color: colors.text, fontWeight: 'bold'}}>
+                              style={{
+                                color: colors.text,
+                                fontWeight: 'bold',
+                              }}>
                               {item.state +
                                 '*\n' +
                                 '(Rank: #' +
@@ -530,7 +547,7 @@ const Home = ({navigation}) => {
                 </View>
               );
             }}></FlatList>
-        </>
+        </ViewShot>
       )}
     </View>
   );

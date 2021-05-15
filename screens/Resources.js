@@ -11,17 +11,25 @@ import {
 import * as Animatable from 'react-native-animatable';
 import {Rtext} from '../common/Rtext';
 import {ANIM_DURATION} from '../Constant';
-import {openUrl, showFlashMessage} from '../utility/MyUtility';
+import {
+  openUrl,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+  showFlashMessage,
+} from '../utility/MyUtility';
 import {useTheme} from '@react-navigation/native';
 import {CustomHeader} from '../common/Header';
 import {request} from '../service/common';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {CARD_ELEVATION} from '../Constant';
+import {AuthContext} from '../service/context';
+import ViewShot from 'react-native-view-shot';
 
 // https://api.covid19india.org/crowdsourced_resources_links.json
 
 const Resources = ({navigation}) => {
+  const {viewContext} = React.useContext(AuthContext);
   const {colors, custom} = useTheme();
   const [loader, setLoader] = React.useState(false);
   const [data, setData] = React.useState([]);
@@ -56,7 +64,15 @@ const Resources = ({navigation}) => {
       {loader ? (
         <Spinner visible={loader} />
       ) : (
-        <>
+        <ViewShot
+          ref={viewContext}
+          options={{
+            format: 'jpg',
+            quality: 1,
+            width: SCREEN_WIDTH,
+            height: SCREEN_HEIGHT,
+          }}
+          style={{backgroundColor: colors.background}}>
           <FlatList
             ListHeaderComponent={
               <Animatable.View
@@ -148,7 +164,7 @@ const Resources = ({navigation}) => {
                 </Animatable.View>
               );
             }}></FlatList>
-        </>
+        </ViewShot>
       )}
     </View>
   );

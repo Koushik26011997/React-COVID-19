@@ -55,7 +55,7 @@ const BottomTabNav = ({navigation}) => {
         component={Districtwise}
         options={{
           tabBarLabel: 'Districts',
-          tabBarColor: '#28a745',
+          tabBarColor: '#bf80ff',
           tabBarIcon: ({color}) => (
             <TouchableOpacity>
               <Icon

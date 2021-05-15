@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {StatusBar, StyleSheet} from 'react-native';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {
@@ -12,14 +12,17 @@ import RootDrawerNav from './navigations/RootDrawerNav';
 import SplashScreen from 'react-native-splash-screen';
 import {AuthContext} from './service/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ViewShot from 'react-native-view-shot';
 
 const App = () => {
+  const viewShot = useRef();
   const [darkTheme, setDarkTheme] = useState('');
   const authContext = React.useMemo(() => ({
     toggleTheme: () => {
       darkTheme === '' ? setDarkTheme('darkTheme') : setDarkTheme('');
       darkTheme === '' ? storeData('darkTheme') : storeData('');
     },
+    viewContext: viewShot,
   }));
 
   const storeData = async value => {
@@ -87,7 +90,13 @@ const App = () => {
       <NavigationContainer
         theme={darkTheme !== '' ? CustomDarkTheme : CustomDefaultTheme}>
         <StatusBar translucent={true} backgroundColor="#0C1C46" />
-        {netInfo.isConnected ? <RootDrawerNav /> : <NoInternet />}
+        {netInfo.isConnected ? (
+          // <ViewShot ref={viewShot} options={{format: 'jpg', quality: 0.9}}>
+          <RootDrawerNav />
+        ) : (
+          // </ViewShot>
+          <NoInternet />
+        )}
       </NavigationContainer>
     </AuthContext.Provider>
   );
