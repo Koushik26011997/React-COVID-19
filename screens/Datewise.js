@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   View,
   ToastAndroid,
@@ -23,7 +23,7 @@ import {
   showYearMonthDay,
 } from '../utility/MyUtility';
 import moment from 'moment';
-import {useTheme} from '@react-navigation/native';
+import {useScrollToTop, useTheme} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AuthContext} from '../service/context';
 import ViewShot from 'react-native-view-shot';
@@ -34,6 +34,7 @@ const flatListRowWidth = Dimensions.get('window').width / 4;
 //https://api.covid19india.org/v4/min/data-2020-05-06.min.json
 
 const Datewise = ({navigation}) => {
+  const flatlistRef = useRef();
   const {viewContext} = React.useContext(AuthContext);
   const {colors, custom} = useTheme();
   const [refreshing, setRefreshing] = React.useState(false);
@@ -96,6 +97,10 @@ const Datewise = ({navigation}) => {
     }
   };
 
+  const listScrollToTop = () => {
+    console.log('listScrollToTop');
+    flatlistRef.current.scrollToOffset({animated: true, offset: 0});
+  };
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       {loader ? (
@@ -299,104 +304,120 @@ const Datewise = ({navigation}) => {
             </Animatable.View>
           )}
 
-          <FlatList
-            data={stateData.sort((a, b) => {
-              if (sort === 'date') {
-                if (desc)
-                  return new Date(a['dateymd']) < new Date(b['dateymd']);
-                else return new Date(a['dateymd']) > new Date(b['dateymd']);
-              } else {
-                if (desc) return parseInt(a[sort]) < parseInt(b[sort]);
-                else return parseInt(a[sort]) > parseInt(b[sort]);
+          <>
+            <FlatList
+              ref={flatlistRef}
+              data={stateData.sort((a, b) => {
+                if (sort === 'date') {
+                  if (desc)
+                    return new Date(a['dateymd']) < new Date(b['dateymd']);
+                  else return new Date(a['dateymd']) > new Date(b['dateymd']);
+                } else {
+                  if (desc) return parseInt(a[sort]) < parseInt(b[sort]);
+                  else return parseInt(a[sort]) > parseInt(b[sort]);
+                }
+              })}
+              keyExtractor={item => item.dateymd}
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
               }
-            })}
-            keyExtractor={item => item.dateymd}
-            showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-            renderItem={({item, index}) => {
-              return (
-                <Animatable.View
-                  style={[
-                    styles.boxContainerRow,
-                    {backgroundColor: colors.card},
-                  ]}
-                  animation="bounceIn"
-                  duration={ANIM_DURATION}>
-                  <View>
-                    <Rtext style={[styles.flatListRow, {color: colors.text}]}>
-                      {moment(moment(item.dateymd, 'YYYY-MM-DD')).format(
-                        'Do MMM, YYYY',
+              renderItem={({item, index}) => {
+                return (
+                  <Animatable.View
+                    style={[
+                      styles.boxContainerRow,
+                      {backgroundColor: colors.card},
+                    ]}
+                    animation="bounceIn"
+                    duration={ANIM_DURATION}>
+                    <View>
+                      <Rtext style={[styles.flatListRow, {color: colors.text}]}>
+                        {moment(moment(item.dateymd, 'YYYY-MM-DD')).format(
+                          'Do MMM, YYYY',
+                        )}
+                      </Rtext>
+                      <Rtext style={[styles.flatListRow, {color: colors.text}]}>
+                        (
+                        {moment(moment(item.dateymd, 'YYYY-MM-DD')).format(
+                          'dddd',
+                        )}
+                        )
+                      </Rtext>
+                    </View>
+                    <View>
+                      <Rtext
+                        style={[
+                          styles.flatListRow,
+                          {textAlign: 'center', color: colors.text},
+                        ]}>
+                        {formatNumber(item.totalconfirmed)}
+                      </Rtext>
+                      {item.dailyconfirmed !== '0' && (
+                        <Rtext
+                          style={[
+                            styles.flatListRow,
+                            {color: custom.confirm, textAlign: 'center'},
+                          ]}>
+                          [+{formatNumber(item.dailyconfirmed)}]
+                        </Rtext>
                       )}
-                    </Rtext>
-                    <Rtext style={[styles.flatListRow, {color: colors.text}]}>
-                      (
-                      {moment(moment(item.dateymd, 'YYYY-MM-DD')).format(
-                        'dddd',
+                    </View>
+
+                    <View>
+                      <Rtext
+                        style={[
+                          styles.flatListRow,
+                          {textAlign: 'center', color: colors.text},
+                        ]}>
+                        {formatNumber(item.totalrecovered)}
+                      </Rtext>
+                      {item.dailyrecovered !== '0' && (
+                        <Rtext
+                          style={[
+                            styles.flatListRow,
+                            {color: '#28a745', textAlign: 'center'},
+                          ]}>
+                          [+{formatNumber(item.dailyrecovered)}]
+                        </Rtext>
                       )}
-                      )
-                    </Rtext>
-                  </View>
-                  <View>
-                    <Rtext
-                      style={[
-                        styles.flatListRow,
-                        {textAlign: 'center', color: colors.text},
-                      ]}>
-                      {formatNumber(item.totalconfirmed)}
-                    </Rtext>
-                    {item.dailyconfirmed !== '0' && (
-                      <Rtext
-                        style={[
-                          styles.flatListRow,
-                          {color: custom.confirm, textAlign: 'center'},
-                        ]}>
-                        [+{formatNumber(item.dailyconfirmed)}]
-                      </Rtext>
-                    )}
-                  </View>
+                    </View>
 
-                  <View>
-                    <Rtext
-                      style={[
-                        styles.flatListRow,
-                        {textAlign: 'center', color: colors.text},
-                      ]}>
-                      {formatNumber(item.totalrecovered)}
-                    </Rtext>
-                    {item.dailyrecovered !== '0' && (
+                    <View>
                       <Rtext
                         style={[
                           styles.flatListRow,
-                          {color: '#28a745', textAlign: 'center'},
+                          {textAlign: 'center', color: colors.text},
                         ]}>
-                        [+{formatNumber(item.dailyrecovered)}]
+                        {formatNumber(item.totaldeceased)}
                       </Rtext>
-                    )}
-                  </View>
+                      {item.dailydeceased !== '0' && (
+                        <Rtext
+                          style={[
+                            styles.flatListRow,
+                            {color: custom.death, textAlign: 'center'},
+                          ]}>
+                          [+{formatNumber(item.dailydeceased)}]
+                        </Rtext>
+                      )}
+                    </View>
+                  </Animatable.View>
+                );
+              }}></FlatList>
 
-                  <View>
-                    <Rtext
-                      style={[
-                        styles.flatListRow,
-                        {textAlign: 'center', color: colors.text},
-                      ]}>
-                      {formatNumber(item.totaldeceased)}
-                    </Rtext>
-                    {item.dailydeceased !== '0' && (
-                      <Rtext
-                        style={[
-                          styles.flatListRow,
-                          {color: custom.death, textAlign: 'center'},
-                        ]}>
-                        [+{formatNumber(item.dailydeceased)}]
-                      </Rtext>
-                    )}
-                  </View>
-                </Animatable.View>
-              );
-            }}></FlatList>
+            <TouchableOpacity
+              onPress={() => listScrollToTop()}
+              style={{
+                backgroundColor: '#A7A7A7',
+                position: 'absolute',
+                right: 12,
+                bottom: 12,
+                padding: 3,
+                borderRadius: 32,
+              }}>
+              <Icon name="arrow-up-circle" size={32} color={colors.text}></Icon>
+            </TouchableOpacity>
+          </>
         </ViewShot>
       )}
     </View>
