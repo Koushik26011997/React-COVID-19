@@ -128,7 +128,7 @@ const News = ({navigation}) => {
                         borderRadius: 3,
                       }}></Image>
                     <View style={{width: pageWidth / 2, marginHorizontal: 10}}>
-                      <Rtext style={{fontWeight: 'bold', color: colors.text}}>
+                      <Rtext style={{color: colors.text}} fontWeight={'bold'}>
                         {item.title}
                       </Rtext>
                       <View

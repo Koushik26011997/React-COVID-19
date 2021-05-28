@@ -69,7 +69,9 @@ const Update = ({navigation}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Rtext style={{fontSize: 16, color: colors.text}}>
+                <Rtext
+                  style={{fontSize: 16, color: colors.text}}
+                  fontWeight={'bold'}>
                   Total {data?.length} updates found
                 </Rtext>
               </View>

@@ -123,7 +123,9 @@ const Home = ({navigation}) => {
               style={styles.boxStyleFour}
               animation="bounceIn"
               duration={ANIM_DURATION}>
-              <Rtext style={{color: custom.confirm, fontSize: 15}}>
+              <Rtext
+                style={{color: custom.confirm, fontSize: 15}}
+                fontWeight={'bold'}>
                 CONFIRMED
               </Rtext>
               <Rtext
@@ -142,7 +144,11 @@ const Home = ({navigation}) => {
               style={styles.boxStyleFour}
               animation="bounceIn"
               duration={ANIM_DURATION}>
-              <Rtext style={{color: '#007bff', fontSize: 15}}>ACTIVE</Rtext>
+              <Rtext
+                style={{color: '#007bff', fontSize: 15}}
+                fontWeight={'bold'}>
+                ACTIVE
+              </Rtext>
               <Rtext style={{color: '#007bff', marginTop: 6, fontSize: 14.5}}>
                 {data.statewise && formatNumber(data.statewise[0].active)}
               </Rtext>
@@ -152,7 +158,11 @@ const Home = ({navigation}) => {
               style={styles.boxStyleFour}
               animation="bounceIn"
               duration={ANIM_DURATION}>
-              <Rtext style={{color: '#28a745', fontSize: 15}}>RECOVERED</Rtext>
+              <Rtext
+                style={{color: '#28a745', fontSize: 15}}
+                fontWeight={'bold'}>
+                RECOVERED
+              </Rtext>
               <Rtext style={{color: '#28a745', marginTop: 6, fontSize: 14.5}}>
                 {data.statewise && formatNumber(data.statewise[0].recovered)}
               </Rtext>
@@ -168,7 +178,9 @@ const Home = ({navigation}) => {
               style={styles.boxStyleFour}
               animation="bounceIn"
               duration={ANIM_DURATION}>
-              <Rtext style={{color: custom.death, fontSize: 15}}>
+              <Rtext
+                style={{color: custom.death, fontSize: 15}}
+                fontWeight={'bold'}>
                 DECEASED
               </Rtext>
               <Rtext
@@ -452,9 +464,9 @@ const Home = ({navigation}) => {
                               },
                             ]}>
                             <Rtext
+                              fontWeight={'bold'}
                               style={{
                                 color: colors.text,
-                                fontWeight: 'bold',
                               }}>
                               {item.state +
                                 '*\n' +
@@ -468,9 +480,9 @@ const Home = ({navigation}) => {
                       </Popover>
                     ) : (
                       <Rtext
+                        fontWeight={'bold'}
                         style={[
                           {
-                            fontWeight: 'bold',
                             color: colors.text,
                             width: flatListRowWidth + 10,
                           },

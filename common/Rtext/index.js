@@ -22,7 +22,6 @@ const Rtext = ({
       normalizeFontSize == 0
         ? normalizeSize(fontSize, lgFontSize, smFontSize)
         : normalizeFontSize,
-    fontWeight,
     fontFamily: fontWeight === 'bold' ? 'LatoBold' : 'LatoRegular',
   };
 

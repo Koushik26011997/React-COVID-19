@@ -157,6 +157,7 @@ const CustomDrawerContent = props => {
                 alignSelf: 'center',
               }}></Image>
             <Rtext
+              fontWeight={'bold'}
               style={{
                 marginTop: 6,
                 color: 'white',
@@ -236,5 +237,5 @@ const CustomDrawerContent = props => {
 export default CustomDrawerContent;
 
 const styles = StyleSheet.create({
-  rowStyle: {fontSize: 16},
+  rowStyle: {fontSize: 16, fontFamily: 'LatoBold'},
 });

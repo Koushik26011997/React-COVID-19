@@ -121,7 +121,9 @@ const Datewise = ({navigation}) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Rtext style={{fontSize: 16, color: colors.text}}>
+            <Rtext
+              style={{fontSize: 16, color: colors.text}}
+              fontWeight={'bold'}>
               {/* Total {stateData?.length} day's record found */}
               {showYearMonthDay(stateData?.length)}
             </Rtext>
@@ -149,12 +151,13 @@ const Datewise = ({navigation}) => {
               }>
               <Icon size={20} color={colors.text} name="swap-vertical-circle" />
               <Rtext
+                fontWeight={'bold'}
                 style={[
                   {
                     fontSize: 14,
                     marginLeft: 3,
                     textAlign: 'center',
-                    fontWeight: 'bold',
+
                     color: colors.text,
                   },
                 ]}>
@@ -171,12 +174,13 @@ const Datewise = ({navigation}) => {
               }>
               <Icon size={20} color={colors.text} name="swap-vertical-circle" />
               <Rtext
+                fontWeight={'bold'}
                 style={[
                   {
                     fontSize: 14,
                     marginLeft: 3,
                     textAlign: 'center',
-                    fontWeight: 'bold',
+
                     color: colors.text,
                   },
                 ]}>
@@ -193,12 +197,13 @@ const Datewise = ({navigation}) => {
               }>
               <Icon size={20} color={colors.text} name="swap-vertical-circle" />
               <Rtext
+                fontWeight={'bold'}
                 style={[
                   {
                     fontSize: 14,
                     marginLeft: 3,
                     textAlign: 'center',
-                    fontWeight: 'bold',
+
                     color: colors.text,
                   },
                 ]}>
@@ -214,12 +219,13 @@ const Datewise = ({navigation}) => {
               }>
               <Icon size={20} color={colors.text} name="swap-vertical-circle" />
               <Rtext
+                fontWeight={'bold'}
                 style={[
                   {
                     fontSize: 14,
                     marginLeft: 3,
                     textAlign: 'center',
-                    fontWeight: 'bold',
+
                     color: colors.text,
                   },
                 ]}>

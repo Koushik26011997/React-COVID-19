@@ -9,11 +9,9 @@ import FAQ from '../screens/FAQ';
 import Lockdown from '../screens/Lockdown';
 import Update from '../screens/Update';
 import News from '../screens/News';
-import StateDetails from '../screens/StateDetails';
 import Worldmeter from '../screens/Worldmeter';
 import Vaccine from '../screens/Vaccine';
 import Resources from '../screens/Resources';
-import RNViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
 import RNFS from 'react-native-fs';
 import {AuthContext} from '../service/context';
@@ -44,8 +42,8 @@ const MainStackNav = ({navigation}) => {
     headerTintColor: 'white',
     headerTitleStyle: {
       color: 'white',
-      fontSize: 16,
-      fontFamily: 'LatoRegular',
+      fontSize: 17,
+      fontFamily: 'LatoBold',
     },
     headerTitleContainerStyle: {
       left: 52,
@@ -67,32 +65,27 @@ const MainStackNav = ({navigation}) => {
   };
 
   const captureAndShareScreenshot = () => {
-    //console.log(viewContext);
-    viewContext.current.capture().then(uri => {
-      RNFS.readFile(uri, 'base64').then(res => {
-        let urlString = 'data:image/jpeg;base64,' + res;
-        let options = {
-          //title: 'Share Title',
-          message: 'COVID-19 Tracker',
-          url: urlString,
-          type: 'image/jpeg',
-        };
-        Share.open(options)
-          .then(res => {
-            console.log(res);
-          })
-          .catch(err => {
-            err && console.log(err);
-          });
+    try {
+      viewContext.current.capture().then(uri => {
+        RNFS.readFile(uri, 'base64').then(res => {
+          let urlString = 'data:image/jpeg;base64,' + res;
+          let options = {
+            message: 'COVID-19 Tracker',
+            url: urlString,
+            type: 'image/jpeg',
+          };
+          Share.open(options)
+            .then(res => {
+              // console.log(res);
+            })
+            .catch(err => {
+              // err && console.log(err);
+            });
+        });
       });
-    });
-    // RNViewShot.takeSnapshot(viewRef, {
-    //   format: 'jpeg',
-    //   quality: 0.8,
-    // }).then(
-    //   uri => console.log('Image saved to', uri),
-    //   error => console.error('Oops, snapshot failed', error),
-    // );
+    } catch (error) {
+      // console.log(error);
+    }
   };
 
   return (

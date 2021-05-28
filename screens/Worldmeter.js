@@ -164,7 +164,9 @@ const Worldmeter = ({navigation}) => {
                     borderColor: colors.primary,
                     borderWidth: 0.6,
                   }}>
-                  <Rtext style={{textAlign: 'center', color: colors.text}}>
+                  <Rtext
+                    style={{textAlign: 'center', color: colors.text}}
+                    fontWeight={'bold'}>
                     {item.country + ' [' + formatNumber(item.cases) + ']'}
                   </Rtext>
                   <View

@@ -142,12 +142,13 @@ const Districtwise = ({navigation}) => {
                       alignItems: 'center',
                     }}>
                     <Rtext
+                      fontWeight={'bold'}
                       style={
                         showDistricts === index
                           ? {
                               textAlign: 'center',
                               fontSize: 16,
-                              fontWeight: 'bold',
+
                               color: colors.text,
                             }
                           : {color: colors.text}
@@ -174,9 +175,9 @@ const Districtwise = ({navigation}) => {
                           animation="bounceIn"
                           duration={ANIM_DURATION}>
                           <Rtext
+                            fontWeight={'bold'}
                             style={[
                               {
-                                fontWeight: 'bold',
                                 color: colors.text,
                                 width: devWidth / 5 + 20,
                                 fontSize: 14,
@@ -200,12 +201,13 @@ const Districtwise = ({navigation}) => {
                               name="swap-vertical-circle"
                             />
                             <Rtext
+                              fontWeight={'bold'}
                               style={[
                                 {
                                   fontSize: 14,
                                   marginLeft: 3,
                                   textAlign: 'center',
-                                  fontWeight: 'bold',
+
                                   color: colors.text,
                                 },
                               ]}>
@@ -228,12 +230,13 @@ const Districtwise = ({navigation}) => {
                               name="swap-vertical-circle"
                             />
                             <Rtext
+                              fontWeight={'bold'}
                               style={[
                                 {
                                   fontSize: 14,
                                   marginLeft: 3,
                                   textAlign: 'center',
-                                  fontWeight: 'bold',
+
                                   color: colors.text,
                                 },
                               ]}>
@@ -256,12 +259,13 @@ const Districtwise = ({navigation}) => {
                               name="swap-vertical-circle"
                             />
                             <Rtext
+                              fontWeight={'bold'}
                               style={[
                                 {
                                   fontSize: 14,
                                   marginLeft: 3,
                                   textAlign: 'center',
-                                  fontWeight: 'bold',
+
                                   color: colors.text,
                                 },
                               ]}>

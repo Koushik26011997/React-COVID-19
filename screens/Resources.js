@@ -59,7 +59,7 @@ const Resources = ({navigation}) => {
     <View
       style={{
         flex: 1,
-        justifyContent: 'center',
+        // justifyContent: 'center',
       }}>
       {loader ? (
         <Spinner visible={loader} />
@@ -143,6 +143,7 @@ const Resources = ({navigation}) => {
                         style={{marginRight: 3}}
                       />
                       <Rtext
+                        fontWeight={'bold'}
                         style={{
                           marginRight: 6,
                           paddingRight: 8,
