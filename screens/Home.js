@@ -318,10 +318,10 @@ const Home = ({navigation}) => {
                   animation="bounceIn"
                   duration={ANIM_DURATION}>
                   <Rtext
+                    fontWeight={'bold'}
                     style={[
                       {
                         marginLeft: 6,
-                        fontWeight: 'bold',
                         color: colors.text,
                         width: flatListRowWidth + 10,
                         fontSize: 14,
@@ -342,12 +342,12 @@ const Home = ({navigation}) => {
                       name="swap-vertical-circle"
                     />
                     <Rtext
+                      fontWeight={'bold'}
                       style={[
                         {
                           fontSize: 14,
                           marginLeft: 3,
                           textAlign: 'center',
-                          fontWeight: 'bold',
                           color: colors.text,
                         },
                       ]}>
@@ -367,12 +367,12 @@ const Home = ({navigation}) => {
                       name="swap-vertical-circle"
                     />
                     <Rtext
+                      fontWeight={'bold'}
                       style={[
                         {
                           fontSize: 14,
                           marginLeft: 3,
                           textAlign: 'center',
-                          fontWeight: 'bold',
                           color: colors.text,
                         },
                       ]}>
@@ -392,12 +392,12 @@ const Home = ({navigation}) => {
                       name="swap-vertical-circle"
                     />
                     <Rtext
+                      fontWeight={'bold'}
                       style={[
                         {
                           fontSize: 14,
                           marginLeft: 3,
                           textAlign: 'center',
-                          fontWeight: 'bold',
                           color: colors.text,
                         },
                       ]}>
@@ -417,12 +417,12 @@ const Home = ({navigation}) => {
                       name="swap-vertical-circle"
                     />
                     <Rtext
+                      fontWeight={'bold'}
                       style={[
                         {
                           fontSize: 14,
                           marginLeft: 3,
                           textAlign: 'center',
-                          fontWeight: 'bold',
                           color: colors.text,
                         },
                       ]}>
