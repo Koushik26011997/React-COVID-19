@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View, StyleSheet, FlatList, Dimensions} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {CustomHeader} from '../common/Header';
@@ -17,13 +17,20 @@ import {useTheme} from '@react-navigation/native';
 import {CARD_ELEVATION} from '../Constant';
 import {AuthContext} from '../service/context';
 import ViewShot from 'react-native-view-shot';
+import {LocalizationContext} from '../common/Translations';
 
 const Update = ({navigation}) => {
   const {viewContext} = React.useContext(AuthContext);
   const [loader, setLoader] = React.useState(false);
   const [data, setData] = React.useState([]);
   const {colors, custom} = useTheme();
-
+  const {
+    translations,
+    appLanguage,
+    setAppLanguage,
+    initializeAppLanguage,
+  } = useContext(LocalizationContext); // 1
+  initializeAppLanguage(); // 2
   useEffect(() => {
     getCurrentUpdateData();
   }, []);
@@ -72,7 +79,8 @@ const Update = ({navigation}) => {
                 <Rtext
                   style={{fontSize: 16, color: colors.text}}
                   fontWeight={'bold'}>
-                  Total {data?.length} updates found
+                  {/* Total {data?.length} updates found */}
+                  {translations['Total 50 updates found']}
                 </Rtext>
               </View>
             }
@@ -123,7 +131,7 @@ const Update = ({navigation}) => {
                             marginLeft: 3,
                             color: colors.text,
                           }}>
-                          Last updated on:{' '}
+                          {translations['Last updated on']}:{' '}
                           {moment(item.timestamp * 1000).format(
                             'Do MMMM, YYYY hh:mm A',
                           )}

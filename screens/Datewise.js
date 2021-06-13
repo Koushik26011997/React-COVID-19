@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 import {
   View,
   ToastAndroid,
@@ -27,6 +27,7 @@ import {useScrollToTop, useTheme} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AuthContext} from '../service/context';
 import ViewShot from 'react-native-view-shot';
+import {LocalizationContext} from '../common/Translations';
 
 const flatListRowWidth = Dimensions.get('window').width / 4;
 
@@ -44,6 +45,15 @@ const Datewise = ({navigation}) => {
 
   const [sort, setSort] = React.useState('date');
   const [desc, setDesc] = React.useState(true);
+
+  //
+  const {
+    translations,
+    appLanguage,
+    setAppLanguage,
+    initializeAppLanguage,
+  } = useContext(LocalizationContext); // 1
+  initializeAppLanguage(); // 2
 
   const setOrdering = type => {
     if (type === sort) setDesc(!desc);
@@ -63,12 +73,12 @@ const Datewise = ({navigation}) => {
 
       if (Platform.OS === 'android') {
         ToastAndroid.showWithGravity(
-          'Data refreshed successfully',
+          translations['Data refreshed successfully'],
           ToastAndroid.SHORT,
           ToastAndroid.CENTER,
         );
       } else {
-        Alert.alert('Data refreshed successfully');
+        Alert.alert(translations['Data refreshed successfully']);
       }
     } catch (e) {
       setRefreshing(false);
@@ -161,7 +171,7 @@ const Datewise = ({navigation}) => {
                     color: colors.text,
                   },
                 ]}>
-                DATE
+                {translations['DATE']}
               </Rtext>
             </TouchableOpacity>
 
@@ -184,7 +194,7 @@ const Datewise = ({navigation}) => {
                     color: colors.text,
                   },
                 ]}>
-                CNF
+                {translations['CNF']}
               </Rtext>
             </TouchableOpacity>
 
@@ -207,7 +217,7 @@ const Datewise = ({navigation}) => {
                     color: colors.text,
                   },
                 ]}>
-                RCV
+                {translations['RCV']}
               </Rtext>
             </TouchableOpacity>
             <TouchableOpacity
@@ -229,7 +239,7 @@ const Datewise = ({navigation}) => {
                     color: colors.text,
                   },
                 ]}>
-                DEC
+                {translations['DEC']}
               </Rtext>
             </TouchableOpacity>
           </Animatable.View>
@@ -244,7 +254,7 @@ const Datewise = ({navigation}) => {
                   {moment().format('Do MMM, YYYY')}
                 </Rtext>
                 <Rtext style={[styles.flatListRow, {color: colors.text}]}>
-                  ({moment().format('dddd')})
+                  ({translations[moment().format('dddd')]})
                 </Rtext>
               </View>
 
@@ -345,9 +355,13 @@ const Datewise = ({navigation}) => {
                       </Rtext>
                       <Rtext style={[styles.flatListRow, {color: colors.text}]}>
                         (
-                        {moment(moment(item.dateymd, 'YYYY-MM-DD')).format(
-                          'dddd',
-                        )}
+                        {
+                          translations[
+                            moment(moment(item.dateymd, 'YYYY-MM-DD')).format(
+                              'dddd',
+                            )
+                          ]
+                        }
                         )
                       </Rtext>
                     </View>

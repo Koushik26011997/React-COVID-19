@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -26,6 +26,7 @@ import {useTheme} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AuthContext} from '../service/context';
 import ViewShot from 'react-native-view-shot';
+import {LocalizationContext} from '../common/Translations';
 
 const devWidth = Dimensions.get('window').width;
 
@@ -38,7 +39,14 @@ const Districtwise = ({navigation}) => {
   const [showDistricts, setshowDistricts] = React.useState(-1);
   const [sort, setSort] = React.useState('confirmed');
   const [desc, setDesc] = React.useState(true);
-
+  //
+  const {
+    translations,
+    appLanguage,
+    setAppLanguage,
+    initializeAppLanguage,
+  } = useContext(LocalizationContext); // 1
+  initializeAppLanguage(); // 2
   const onRefresh = React.useCallback(async () => {
     try {
       setRefreshing(true);
@@ -47,12 +55,12 @@ const Districtwise = ({navigation}) => {
       setRefreshing(false);
       if (Platform.OS === 'android') {
         ToastAndroid.showWithGravity(
-          'Data refreshed successfully',
+          translations['Data refreshed successfully'],
           ToastAndroid.SHORT,
           ToastAndroid.CENTER,
         );
       } else {
-        Alert.alert('Data refreshed successfully');
+        Alert.alert(translations['Data refreshed successfully']);
       }
     } catch (e) {
       setRefreshing(false);
@@ -153,7 +161,7 @@ const Districtwise = ({navigation}) => {
                             }
                           : {color: colors.text}
                       }>
-                      {item.state}
+                      {translations[item.state]}
                     </Rtext>
                     {showDistricts !== index && (
                       <Icon
@@ -183,7 +191,7 @@ const Districtwise = ({navigation}) => {
                                 fontSize: 14,
                               },
                             ]}>
-                            DISTRICT
+                            {translations['DISTRICT']}
                           </Rtext>
                           <TouchableOpacity
                             onPress={() => setOrdering('confirmed')}
@@ -211,7 +219,7 @@ const Districtwise = ({navigation}) => {
                                   color: colors.text,
                                 },
                               ]}>
-                              CNF
+                              {translations['CNF']}
                             </Rtext>
                           </TouchableOpacity>
                           <TouchableOpacity
@@ -240,7 +248,7 @@ const Districtwise = ({navigation}) => {
                                   color: colors.text,
                                 },
                               ]}>
-                              ACT
+                              {translations['ACT']}
                             </Rtext>
                           </TouchableOpacity>
                           <TouchableOpacity
@@ -269,7 +277,7 @@ const Districtwise = ({navigation}) => {
                                   color: colors.text,
                                 },
                               ]}>
-                              RCV
+                              {translations['RCV']}
                             </Rtext>
                           </TouchableOpacity>
                           <TouchableOpacity
@@ -297,7 +305,7 @@ const Districtwise = ({navigation}) => {
                                   color: colors.text,
                                 },
                               ]}>
-                              DEC
+                              {translations['DEC']}
                             </Rtext>
                           </TouchableOpacity>
                         </Animatable.View>
@@ -319,15 +327,18 @@ const Districtwise = ({navigation}) => {
                             animation="bounceIn"
                             duration={ANIM_DURATION}>
                             <Rtext
+                              fontWeight={'bold'}
                               style={[
                                 {
                                   color: colors.text,
                                   width: devWidth / 5 + 20,
                                 },
                               ]}>
-                              {item.district +
+                              {translations[item.district] +
                                 '\n' +
-                                '(Rank: #' +
+                                '(' +
+                                translations['Rank'] +
+                                ': #' +
                                 (index + 1) +
                                 ')'}
                             </Rtext>

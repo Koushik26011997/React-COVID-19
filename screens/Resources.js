@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -25,6 +25,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {CARD_ELEVATION} from '../Constant';
 import {AuthContext} from '../service/context';
 import ViewShot from 'react-native-view-shot';
+import {LocalizationContext} from '../common/Translations';
 
 // https://api.covid19india.org/crowdsourced_resources_links.json
 
@@ -33,6 +34,14 @@ const Resources = ({navigation}) => {
   const {colors, custom} = useTheme();
   const [loader, setLoader] = React.useState(false);
   const [data, setData] = React.useState([]);
+
+  const {
+    translations,
+    appLanguage,
+    setAppLanguage,
+    initializeAppLanguage,
+  } = useContext(LocalizationContext); // 1
+  initializeAppLanguage(); // 2
 
   useEffect(() => {
     getCurrentData();
@@ -102,9 +111,7 @@ const Resources = ({navigation}) => {
                     lineHeight: 24,
                     color: colors.text,
                   }}>
-                  ***The objective of this page is to help people gain access to
-                  vital resources by sharing information only. We strongly
-                  encourage to AVOID black market.
+                  {translations['About Resources']}
                 </Text>
               </Animatable.View>
             }

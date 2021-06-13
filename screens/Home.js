@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -32,6 +32,7 @@ import Popover, {
 } from 'react-native-popover-view';
 import ViewShot from 'react-native-view-shot';
 import {AuthContext} from '../service/context';
+import {LocalizationContext} from '../common/Translations';
 
 const flatListRowWidth = Dimensions.get('window').width / 5;
 
@@ -49,6 +50,15 @@ const Home = ({navigation}) => {
 
   const {viewContext} = React.useContext(AuthContext);
 
+  //
+  const {
+    translations,
+    appLanguage,
+    setAppLanguage,
+    initializeAppLanguage,
+  } = useContext(LocalizationContext); // 1
+  initializeAppLanguage(); // 2
+
   const onRefresh = React.useCallback(async () => {
     try {
       setRefreshing(true);
@@ -58,12 +68,12 @@ const Home = ({navigation}) => {
       setRefreshing(false);
       if (Platform.OS === 'android') {
         ToastAndroid.showWithGravity(
-          'Data refreshed successfully',
+          translations['Data refreshed successfully'],
           ToastAndroid.SHORT,
           ToastAndroid.CENTER,
         );
       } else {
-        Alert.alert('Data refreshed successfully');
+        Alert.alert(translations['Data refreshed successfully']);
       }
     } catch (e) {
       setRefreshing(false);
@@ -126,13 +136,16 @@ const Home = ({navigation}) => {
               <Rtext
                 style={{color: custom.confirm, fontSize: 15}}
                 fontWeight={'bold'}>
-                CONFIRMED
+                {translations['CONFIRMED']}
               </Rtext>
               <Rtext
+                fontWeight={'bold'}
                 style={{color: custom.confirm, marginTop: 6, fontSize: 15}}>
                 {data.statewise && formatNumber(data.statewise[0].confirmed)}
               </Rtext>
-              <Rtext style={{color: custom.confirm, fontSize: 15}}>
+              <Rtext
+                style={{color: custom.confirm, fontSize: 15}}
+                fontWeight={'bold'}>
                 [+
                 {data.statewise &&
                   formatNumber(data.statewise[0].deltaconfirmed)}
@@ -145,11 +158,14 @@ const Home = ({navigation}) => {
               animation="bounceIn"
               duration={ANIM_DURATION}>
               <Rtext
+                fontWeight={'bold'}
                 style={{color: '#007bff', fontSize: 15}}
                 fontWeight={'bold'}>
-                ACTIVE
+                {translations['ACTIVE']}
               </Rtext>
-              <Rtext style={{color: '#007bff', marginTop: 6, fontSize: 14.5}}>
+              <Rtext
+                style={{color: '#007bff', marginTop: 6, fontSize: 15}}
+                fontWeight={'bold'}>
                 {data.statewise && formatNumber(data.statewise[0].active)}
               </Rtext>
             </Animatable.View>
@@ -159,14 +175,19 @@ const Home = ({navigation}) => {
               animation="bounceIn"
               duration={ANIM_DURATION}>
               <Rtext
+                fontWeight={'bold'}
                 style={{color: '#28a745', fontSize: 15}}
                 fontWeight={'bold'}>
-                RECOVERED
+                {translations['RECOVERED']}
               </Rtext>
-              <Rtext style={{color: '#28a745', marginTop: 6, fontSize: 14.5}}>
+              <Rtext
+                fontWeight={'bold'}
+                style={{color: '#28a745', marginTop: 6, fontSize: 15}}>
                 {data.statewise && formatNumber(data.statewise[0].recovered)}
               </Rtext>
-              <Rtext style={{color: '#28a745', fontSize: 15}}>
+              <Rtext
+                style={{color: '#28a745', fontSize: 15}}
+                fontWeight={'bold'}>
                 [+
                 {data.statewise &&
                   formatNumber(data.statewise[0].deltarecovered)}
@@ -181,13 +202,16 @@ const Home = ({navigation}) => {
               <Rtext
                 style={{color: custom.death, fontSize: 15}}
                 fontWeight={'bold'}>
-                DECEASED
+                {translations['DECEASED']}
               </Rtext>
               <Rtext
-                style={{color: custom.death, marginTop: 6, fontSize: 14.5}}>
+                fontWeight={'bold'}
+                style={{color: custom.death, marginTop: 6, fontSize: 15}}>
                 {data.statewise && formatNumber(data.statewise[0].deaths)}
               </Rtext>
-              <Rtext style={{color: custom.death, fontSize: 15}}>
+              <Rtext
+                style={{color: custom.death, fontSize: 15}}
+                fontWeight={'bold'}>
                 [+
                 {data.statewise && formatNumber(data.statewise[0].deltadeaths)}]
               </Rtext>
@@ -210,7 +234,7 @@ const Home = ({navigation}) => {
                   animation="bounceIn"
                   duration={ANIM_DURATION}>
                   <Rtext style={{color: '#28a745', textAlign: 'center'}}>
-                    Last Updated On:
+                    {translations['Last Updated On']}:
                     {data.statewise &&
                       moment(
                         moment(
@@ -238,7 +262,7 @@ const Home = ({navigation}) => {
                           data.tested[data.tested.length - 1]
                             .totalsamplestested,
                         ) + ' '}
-                      ICMR TESTED ON
+                      {translations['ICMR TESTED ON']}
                       {data.tested &&
                         moment(
                           moment(
@@ -258,7 +282,7 @@ const Home = ({navigation}) => {
                     onPress={() =>
                       openUrl(data.tested[data.tested.length - 1].source)
                     }>
-                    Click here to view the source
+                    {translations['Click here to view the source']}
                   </Rtext>
                 </Animatable.View>
 
@@ -283,7 +307,7 @@ const Home = ({navigation}) => {
                           data.tested[data.tested.length - 1]
                             .totaldosesadministered,
                         )}{' '}
-                      vaccine doses administered
+                      {translations['vaccine doses administered']}
                     </Rtext>
                   </Animatable.View>
                 ) : (
@@ -305,7 +329,7 @@ const Home = ({navigation}) => {
                           data.tested[data.tested.length - 2]
                             .totaldosesadministered,
                         )}{' '}
-                      vaccine doses administered
+                      {translations['vaccine doses administered']}
                     </Rtext>
                   </Animatable.View>
                 )}
@@ -327,7 +351,7 @@ const Home = ({navigation}) => {
                         fontSize: 14,
                       },
                     ]}>
-                    STATE
+                    {translations['STATE']}
                   </Rtext>
                   <TouchableOpacity
                     onPress={() => setOrdering('confirmed')}
@@ -351,7 +375,7 @@ const Home = ({navigation}) => {
                           color: colors.text,
                         },
                       ]}>
-                      CNF
+                      {translations['CNF']}
                     </Rtext>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -376,7 +400,7 @@ const Home = ({navigation}) => {
                           color: colors.text,
                         },
                       ]}>
-                      ACT
+                      {translations['ACT']}
                     </Rtext>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -401,7 +425,7 @@ const Home = ({navigation}) => {
                           color: colors.text,
                         },
                       ]}>
-                      RCV
+                      {translations['RCV']}
                     </Rtext>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -426,7 +450,7 @@ const Home = ({navigation}) => {
                           color: colors.text,
                         },
                       ]}>
-                      DEC
+                      {translations['DEC']}
                     </Rtext>
                   </TouchableOpacity>
                 </Animatable.View>
@@ -468,9 +492,11 @@ const Home = ({navigation}) => {
                               style={{
                                 color: colors.text,
                               }}>
-                              {item.state +
+                              {translations[item.state] +
                                 '*\n' +
-                                '(Rank: #' +
+                                '(' +
+                                translations['Rank'] +
+                                ': #' +
                                 (index + 1) +
                                 ')'}
                             </Rtext>
@@ -487,7 +513,13 @@ const Home = ({navigation}) => {
                             width: flatListRowWidth + 10,
                           },
                         ]}>
-                        {item.state + '\n' + '(Rank: #' + (index + 1) + ')'}
+                        {translations[item.state] +
+                          '\n' +
+                          '(' +
+                          translations['Rank'] +
+                          ': #' +
+                          (index + 1) +
+                          ')'}
                       </Rtext>
                     )}
 

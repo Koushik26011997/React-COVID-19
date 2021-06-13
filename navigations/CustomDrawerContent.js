@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -21,54 +21,7 @@ import {AuthContext} from '../service/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {DrawerContent, DrawerItem} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
-const arr = [
-  {
-    label: 'Home',
-    page: 'Home',
-    icon: 'home',
-  },
-  {
-    label: 'Resources',
-    page: 'Resources',
-    icon: 'cards-heart',
-  },
-  {
-    label: 'FAQ',
-    page: 'FAQ',
-    icon: 'help-circle',
-  },
-  // {
-  //   label: 'Current Updates',
-  //   page: 'Update',
-  //   icon: 'update',
-  // },
-  {
-    label: 'Lockdown Protocols',
-    page: 'Lockdown',
-    icon: 'protocol',
-  },
-  {
-    label: 'COVID-19 News',
-    page: 'News',
-    icon: 'newspaper',
-  },
-  {
-    label: 'World Meter',
-    page: 'Worldmeter',
-    icon: 'earth',
-  },
-  {
-    label: 'COWIN Vaccination',
-    page: 'Vaccine',
-    icon: 'needle',
-  },
-  {
-    label: 'Exit',
-    page: 'Exit',
-    icon: 'logout',
-  },
-];
+import {LocalizationContext} from '../common/Translations';
 
 const CustomDrawerContent = props => {
   const {toggleTheme} = React.useContext(AuthContext);
@@ -76,9 +29,65 @@ const CustomDrawerContent = props => {
   const [page, setPage] = useState('');
   const [isEnabled, setIsEnabled] = useState(false);
 
+  //
+  const {
+    translations,
+    appLanguage,
+    setAppLanguage,
+    initializeAppLanguage,
+  } = useContext(LocalizationContext); // 1
+  initializeAppLanguage(); // 2
   useEffect(() => {
     getData();
   });
+
+  const arr = [
+    {
+      label: translations['Home'],
+      page: 'Home',
+      icon: 'home',
+    },
+    {
+      label: translations['Resources'],
+      page: 'Resources',
+      icon: 'cards-heart',
+    },
+    {
+      label: translations['FAQ'],
+      page: 'FAQ',
+      icon: 'help-circle',
+    },
+    // {
+    //   label: 'Current Updates',
+    //   page: 'Update',
+    //   icon: 'update',
+    // },
+    {
+      label: translations['Lockdown Protocols'],
+      page: 'Lockdown',
+      icon: 'protocol',
+    },
+    {
+      label: translations['COVID-19 News'],
+      page: 'News',
+      icon: 'newspaper',
+    },
+    {
+      label: translations['World Meter'],
+      page: 'Worldmeter',
+      icon: 'earth',
+    },
+    {
+      label: translations['Settings'],
+      page: 'Settings',
+      icon: 'cog-outline',
+    },
+    {
+      label: translations['Exit'],
+      page: 'Exit',
+      icon: 'logout',
+    },
+  ];
 
   const getData = async () => {
     try {
@@ -96,27 +105,27 @@ const CustomDrawerContent = props => {
     props.navigation.closeDrawer();
     if (Platform.OS === 'android') {
       ToastAndroid.showWithGravity(
-        'Please wait sometime to change the theme',
+        translations['Please wait sometime to change the mode'],
         ToastAndroid.SHORT,
         ToastAndroid.CENTER,
       );
     } else {
-      Alert.alert('Please wait sometime to change the theme');
+      Alert.alert(translations['Please wait sometime to change the mode']);
     }
   };
 
   const clickOnProduct = page => {
     if (page === 'Exit') {
       Alert.alert(
-        'COVID-19 Tracker',
-        'Do you want to exit?',
+        translations['COVID-19 Tracker'],
+        translations['Do you want to exit?'],
         [
           {
-            text: 'No',
+            text: translations['No'],
             onPress: () => null,
             style: 'cancel',
           },
-          {text: 'Yes', onPress: () => closeApp()},
+          {text: translations['Yes'], onPress: () => closeApp()},
         ],
         {cancelable: false},
       );
@@ -163,7 +172,7 @@ const CustomDrawerContent = props => {
                 color: 'white',
               }}
               numberOfLines={1}>
-              #STAY HOME | #STAY SAFE | #WEAR MASK
+              {translations['#STAY HOME | #STAY SAFE | #WEAR MASK']}
             </Rtext>
           </View>
           {/* <View style={{flexDirection: 'row'}}>
@@ -218,7 +227,7 @@ const CustomDrawerContent = props => {
             marginTop: 12,
           }}>
           <Rtext style={[styles.rowStyle, {color: colors.text}]}>
-            Dark Theme
+            {translations['Dark Mode']}
           </Rtext>
           <Switch
             trackColor={{false: '#767577', true: '#81b0ff'}}

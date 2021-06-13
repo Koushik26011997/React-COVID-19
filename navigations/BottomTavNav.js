@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import About from '../screens/About';
 import Home from '../screens/Home';
@@ -10,19 +10,29 @@ import Chart from '../screens/Chart';
 import {BASE_URL, TAB_BAR_ICON_SIZE} from '../Constant';
 import Vaccine from '../screens/Vaccine';
 import Update from '../screens/Update';
+import {LocalizationContext} from '../common/Translations';
 
 const BottomTab = createMaterialBottomTabNavigator();
 
 const BottomTabNav = ({navigation}) => {
+  //
+  const {
+    translations,
+    appLanguage,
+    setAppLanguage,
+    initializeAppLanguage,
+  } = useContext(LocalizationContext); // 1
+  initializeAppLanguage(); // 2
+
   return (
     <BottomTab.Navigator
       screenOptions={{tabBarColor: '#0C1C46'}}
-      initialRouteName={Home}>
+      initialRouteName={Chart}>
       <BottomTab.Screen
         name="Home"
         component={Home}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: translations['Home'],
           tabBarColor: '#0C1C46',
           tabBarIcon: ({color}) => (
             <TouchableOpacity>
@@ -36,7 +46,7 @@ const BottomTabNav = ({navigation}) => {
         name="Datewise"
         component={Datewise}
         options={{
-          tabBarLabel: 'Dates',
+          tabBarLabel: translations['Dates'],
           tabBarColor: '#007bff',
           tabBarIcon: ({color}) => (
             <TouchableOpacity>
@@ -54,7 +64,7 @@ const BottomTabNav = ({navigation}) => {
         name="Districtwise"
         component={Districtwise}
         options={{
-          tabBarLabel: 'Districts',
+          tabBarLabel: translations['Districts'],
           tabBarColor: '#bf80ff',
           tabBarIcon: ({color}) => (
             <TouchableOpacity>
@@ -67,8 +77,8 @@ const BottomTabNav = ({navigation}) => {
           ),
         }}
       />
-
-      {/* <BottomTab.Screen
+      {/* 
+      <BottomTab.Screen
         name="Chart"
         component={Chart}
         options={{
@@ -86,7 +96,7 @@ const BottomTabNav = ({navigation}) => {
         name="Update"
         component={Update}
         options={{
-          tabBarLabel: 'Updates',
+          tabBarLabel: translations['Updates'],
           tabBarColor: '#6c757d',
           tabBarIcon: ({color}) => (
             <TouchableOpacity>
@@ -100,7 +110,7 @@ const BottomTabNav = ({navigation}) => {
         name="About"
         component={About}
         options={{
-          tabBarLabel: 'About',
+          tabBarLabel: translations['About'],
           tabBarColor: '#dc3545',
           tabBarIcon: ({color}) => (
             <TouchableOpacity>

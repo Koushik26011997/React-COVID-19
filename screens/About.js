@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   StyleSheet,
@@ -21,12 +21,23 @@ import qs from 'qs';
 import {useTheme} from '@react-navigation/native';
 import {AuthContext} from '../service/context';
 import ViewShot from 'react-native-view-shot';
+import {LocalizationContext} from '../common/Translations';
 
 // https://coronavirus-19-api.herokuapp.com/countries
 
 const About = ({navigation}) => {
   const {colors, custom} = useTheme();
   const {viewContext} = React.useContext(AuthContext);
+
+  //
+  const {
+    translations,
+    appLanguage,
+    setAppLanguage,
+    initializeAppLanguage,
+  } = useContext(LocalizationContext); // 1
+  initializeAppLanguage(); // 2
+
   const sendMail = async mail => {
     let url = `mailto:${mail}`;
 
@@ -98,7 +109,7 @@ const About = ({navigation}) => {
                 marginVertical: 16,
                 fontSize: 38,
               }}>
-              Mr. Koushik Paul.
+              {translations['Koushik Paul']}
             </Text>
             <Rtext
               style={{
@@ -107,10 +118,7 @@ const About = ({navigation}) => {
                 lineHeight: 30,
                 color: colors.text,
               }}>
-              Hi, My name is Mr. Koushik Paul and I am a professional Android &
-              React Native App Developer holding MCA degree. I work to build
-              dynamic apps at Idiosys Technology PVT LTD, Kolkata. I have my
-              work experience for 1.6 years. My Email ID:{' '}
+              {translations['AboutMe']}:{' '}
               {
                 <Rtext
                   style={{color: '#007BFF', textDecorationLine: 'underline'}}
@@ -118,7 +126,7 @@ const About = ({navigation}) => {
                   itskoushikpaul@gmail.com
                 </Rtext>
               }{' '}
-              and my GitHub page link is:{' '}
+              {translations['and my GitHub page link is']}:{' '}
               {
                 <Rtext
                   style={{color: '#007BFF', textDecorationLine: 'underline'}}
@@ -128,7 +136,7 @@ const About = ({navigation}) => {
                   https://github.com/Koushik26011997/
                 </Rtext>
               }
-              . Please always stay connected with me.
+              . {translations['Please always stay connected with me']}
             </Rtext>
 
             <Rtext
@@ -137,7 +145,8 @@ const About = ({navigation}) => {
                 color: colors.text,
                 fontSize: 18,
               }}>
-              Powered By &#169;KPTECH, 2021
+              {/* Powered By &#169;KPTECH, 2021 */}
+              {translations['Powered By']}
             </Rtext>
           </View>
         </ImageBackground>

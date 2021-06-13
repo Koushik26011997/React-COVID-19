@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useContext} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import BottomTabNav from './BottomTavNav';
 import {TouchableOpacity, View} from 'react-native';
@@ -15,12 +15,22 @@ import Resources from '../screens/Resources';
 import Share from 'react-native-share';
 import RNFS from 'react-native-fs';
 import {AuthContext} from '../service/context';
-import ViewShot from 'react-native-view-shot';
+import {LocalizationContext} from '../common/Translations';
+import {Settings} from '../screens/Settings';
 
 const MainStack = createStackNavigator();
 
 const MainStackNav = ({navigation}) => {
   const {viewContext} = React.useContext(AuthContext);
+
+  //
+  const {
+    translations,
+    appLanguage,
+    setAppLanguage,
+    initializeAppLanguage,
+  } = useContext(LocalizationContext); // 1
+  initializeAppLanguage(); // 2
 
   const options = {
     headerStyle: {
@@ -38,7 +48,7 @@ const MainStackNav = ({navigation}) => {
     headerForceInset: {top: 'never', bottom: 'never'},
     stackAnimation: 'fade',
     headerTopInsetEnabled: false,
-    headerTitle: 'COVID-19 Tracker',
+    headerTitle: translations['COVID-19 Tracker'],
     headerTintColor: 'white',
     headerTitleStyle: {
       color: 'white',
@@ -118,7 +128,7 @@ const MainStackNav = ({navigation}) => {
           component={FAQ}
           options={{
             ...options,
-            headerTitle: 'FAQ',
+            headerTitle: translations['FAQ'],
           }}
         />
 
@@ -127,7 +137,7 @@ const MainStackNav = ({navigation}) => {
           component={Lockdown}
           options={{
             ...options,
-            headerTitle: 'Lockdown Protocols',
+            headerTitle: translations['Lockdown Protocols'],
           }}
         />
 
@@ -145,7 +155,7 @@ const MainStackNav = ({navigation}) => {
           component={News}
           options={{
             ...options,
-            headerTitle: 'COVID-19 News',
+            headerTitle: translations['COVID-19 News'],
           }}
         />
 
@@ -154,7 +164,7 @@ const MainStackNav = ({navigation}) => {
           component={Worldmeter}
           options={{
             ...options,
-            headerTitle: 'World Meter',
+            headerTitle: translations['World Meter'],
           }}
         />
 
@@ -163,16 +173,25 @@ const MainStackNav = ({navigation}) => {
           component={Resources}
           options={{
             ...options,
-            headerTitle: 'Resources',
+            headerTitle: translations['Resources'],
           }}
         />
 
-        <MainStack.Screen
+        {/* <MainStack.Screen
           name="Vaccine"
           component={Vaccine}
           options={{
             ...options,
-            headerTitle: 'COWIN Vaccination',
+            headerTitle: translations['COWIN Vaccination'],
+          }}
+        /> */}
+
+        <MainStack.Screen
+          name="Settings"
+          component={Settings}
+          options={{
+            ...options,
+            headerTitle: translations['Settings'],
           }}
         />
       </MainStack.Navigator>

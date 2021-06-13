@@ -27,6 +27,8 @@
     "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-loading-spinner-overlay": "^2.0.0",
+    "react-native-localization": "^2.1.7",
+    "react-native-localize": "^2.1.1",
     "react-native-paper": "^4.8.1",
     "react-native-popover-view": "^4.0.1",
     "react-native-reanimated": "^2.1.0",
