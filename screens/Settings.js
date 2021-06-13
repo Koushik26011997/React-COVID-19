@@ -14,11 +14,20 @@ export const Settings = ({navigation}) => {
     initializeAppLanguage,
   } = useContext(LocalizationContext);
   initializeAppLanguage();
+
   const langObj = {
     en: 'English',
     hn: 'हिंदी',
     bn: 'বাংলা',
   };
+
+  const handleChange = currentLang => {
+    setAppLanguage(currentLang);
+    setTimeout(() => {
+      navigation.goBack();
+    }, 3000);
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: colors.background}}>
       <View
@@ -41,7 +50,7 @@ export const Settings = ({navigation}) => {
             height: 42,
           }}
           onPress={() => {
-            setAppLanguage(currentLang);
+            handleChange(currentLang);
           }}>
           <Rtext fontWeight={'bold'}>{langObj[currentLang]}</Rtext>
           {appLanguage === currentLang ? (
