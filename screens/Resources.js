@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -9,29 +9,29 @@ import {
   Text,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {Rtext} from '../common/Rtext';
-import {ANIM_DURATION} from '../Constant';
+import { Rtext } from '../common/Rtext';
+import { ANIM_DURATION } from '../Constant';
 import {
   openUrl,
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
   showFlashMessage,
 } from '../utility/MyUtility';
-import {useTheme} from '@react-navigation/native';
-import {CustomHeader} from '../common/Header';
-import {request} from '../service/common';
+import { useTheme } from '@react-navigation/native';
+import { CustomHeader } from '../common/Header';
+import { request } from '../service/common';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {CARD_ELEVATION} from '../Constant';
-import {AuthContext} from '../service/context';
+import { CARD_ELEVATION } from '../Constant';
+import { AuthContext } from '../service/context';
 import ViewShot from 'react-native-view-shot';
-import {LocalizationContext} from '../common/Translations';
+import { LocalizationContext } from '../common/Translations';
 
 // https://api.covid19india.org/crowdsourced_resources_links.json
 
-const Resources = ({navigation}) => {
-  const {viewContext} = React.useContext(AuthContext);
-  const {colors, custom} = useTheme();
+const Resources = ({ navigation }) => {
+  const { viewContext } = React.useContext(AuthContext);
+  const { colors, custom } = useTheme();
   const [loader, setLoader] = React.useState(false);
   const [data, setData] = React.useState([]);
 
@@ -81,11 +81,11 @@ const Resources = ({navigation}) => {
             width: SCREEN_WIDTH,
             height: SCREEN_HEIGHT,
           }}
-          style={{backgroundColor: colors.background}}>
+          style={{ backgroundColor: colors.background }}>
           <FlatList
             ListHeaderComponent={
               <Animatable.View
-                animation="bounceIn"
+                animation="fadeInRightBig"
                 duration={ANIM_DURATION}
                 style={{
                   padding: 6,
@@ -107,7 +107,7 @@ const Resources = ({navigation}) => {
                 <Text
                   style={{
                     fontFamily: 'LatoBold',
-                    fontSize: 16,
+                    fontSize: 14,
                     lineHeight: 24,
                     color: colors.text,
                   }}>
@@ -118,10 +118,10 @@ const Resources = ({navigation}) => {
             data={data}
             keyExtractor={item => item.link}
             showsVerticalScrollIndicator={false}
-            renderItem={({item, index}) => {
+            renderItem={({ item, index }) => {
               return (
                 <Animatable.View
-                  animation="bounceIn"
+                  animation="fadeInRightBig"
                   duration={ANIM_DURATION}
                   style={{
                     padding: 6,
@@ -142,12 +142,12 @@ const Resources = ({navigation}) => {
                     borderWidth: 0.6,
                   }}>
                   <TouchableOpacity onPress={() => openUrl(item.link)}>
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={{ flexDirection: 'row' }}>
                       <Icon
                         size={16}
                         color={custom.confirm}
                         name="cards-heart"
-                        style={{marginRight: 3}}
+                        style={{ marginRight: 3 }}
                       />
                       <Rtext
                         fontWeight={'bold'}

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   StyleSheet,
@@ -9,8 +9,8 @@ import {
   Dimensions,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {Rtext} from '../common/Rtext';
-import {ANIM_DURATION} from '../Constant';
+import { Rtext } from '../common/Rtext';
+import { ANIM_DURATION } from '../Constant';
 import {
   openUrl,
   SCREEN_HEIGHT,
@@ -18,16 +18,16 @@ import {
   showFlashMessage,
 } from '../utility/MyUtility';
 import qs from 'qs';
-import {useTheme} from '@react-navigation/native';
-import {AuthContext} from '../service/context';
+import { useTheme } from '@react-navigation/native';
+import { AuthContext } from '../service/context';
 import ViewShot from 'react-native-view-shot';
-import {LocalizationContext} from '../common/Translations';
+import { LocalizationContext } from '../common/Translations';
 
 // https://coronavirus-19-api.herokuapp.com/countries
 
-const About = ({navigation}) => {
-  const {colors, custom} = useTheme();
-  const {viewContext} = React.useContext(AuthContext);
+const About = ({ navigation }) => {
+  const { colors, custom } = useTheme();
+  const { viewContext } = React.useContext(AuthContext);
 
   //
   const {
@@ -74,7 +74,7 @@ const About = ({navigation}) => {
           width: SCREEN_WIDTH,
           height: SCREEN_HEIGHT,
         }}
-        style={{backgroundColor: colors.background}}>
+        style={{ backgroundColor: colors.background }}>
         <ImageBackground
           source={require('../icons/back.png')}
           style={{
@@ -89,8 +89,8 @@ const About = ({navigation}) => {
               justifyContent: 'flex-start',
             }}>
             <Animatable.View
-              style={{marginTop: 24}}
-              animation="bounceIn"
+              style={{ marginTop: 24 }}
+              animation="fadeInRightBig"
               duration={ANIM_DURATION}>
               <Image
                 source={require('../icons/kp.jpg')}
@@ -121,7 +121,7 @@ const About = ({navigation}) => {
               {translations['AboutMe']}:{' '}
               {
                 <Rtext
-                  style={{color: '#007BFF', textDecorationLine: 'underline'}}
+                  style={{ color: '#007BFF', textDecorationLine: 'underline' }}
                   onPress={() => sendMail('itskoushikpaul@gmail.com')}>
                   itskoushikpaul@gmail.com
                 </Rtext>
@@ -129,7 +129,7 @@ const About = ({navigation}) => {
               {translations['and my GitHub page link is']}:{' '}
               {
                 <Rtext
-                  style={{color: '#007BFF', textDecorationLine: 'underline'}}
+                  style={{ color: '#007BFF', textDecorationLine: 'underline' }}
                   onPress={() =>
                     openUrl('https://github.com/Koushik26011997/')
                   }>
@@ -141,7 +141,7 @@ const About = ({navigation}) => {
 
             <Rtext
               style={{
-                marginTop: 32,
+                marginTop: 24,
                 color: colors.text,
                 fontSize: 18,
               }}>

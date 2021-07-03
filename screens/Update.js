@@ -87,7 +87,7 @@ const Update = ({navigation}) => {
             renderItem={({item, index}) => {
               return (
                 <Animatable.View
-                  animation="bounceIn"
+                  animation="fadeInRightBig"
                   duration={ANIM_DURATION}
                   style={{
                     elevation: CARD_ELEVATION,

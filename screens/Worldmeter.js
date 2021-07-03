@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -9,8 +9,8 @@ import {
   Keyboard,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {Rtext} from '../common/Rtext';
-import {ANIM_DURATION, CARD_ELEVATION} from '../Constant';
+import { Rtext } from '../common/Rtext';
+import { ANIM_DURATION, CARD_ELEVATION } from '../Constant';
 import {
   formatNumber,
   openUrl,
@@ -18,23 +18,43 @@ import {
   SCREEN_WIDTH,
   showFlashMessage,
 } from '../utility/MyUtility';
-import {useTheme} from '@react-navigation/native';
-import {request} from '../service/common';
+import { useTheme } from '@react-navigation/native';
+import { request } from '../service/common';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {AuthContext} from '../service/context';
+import { AuthContext } from '../service/context';
 import ViewShot from 'react-native-view-shot';
+import { LocalizationContext } from '../common/Translations';
+import Animated from 'react-native-reanimated';
 
-const Worldmeter = ({navigation}) => {
-  const {viewContext} = React.useContext(AuthContext);
+const Worldmeter = ({ navigation }) => {
+
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+
+  const { viewContext } = React.useContext(AuthContext);
   const [loader, setLoader] = React.useState(false);
   const [data, setData] = React.useState([]);
   const [filteredDataSource, setFilteredDataSource] = useState([]);
-  const {colors, custom} = useTheme();
+  const { colors, custom } = useTheme();
   const [searchText, setSearchText] = useState('');
+
+
+  //
+  const {
+    translations,
+    appLanguage,
+    setAppLanguage,
+    initializeAppLanguage,
+  } = useContext(LocalizationContext); // 1
+  initializeAppLanguage(); // 2
 
   useEffect(() => {
     getCurrentUpdateData();
+
+    // scrollY.addListener(({ value }) => {
+    //   console.log(value);
+    // })
   }, []);
 
   const getCurrentUpdateData = async () => {
@@ -83,48 +103,56 @@ const Worldmeter = ({navigation}) => {
             width: SCREEN_WIDTH,
             height: SCREEN_HEIGHT,
           }}
-          style={{backgroundColor: colors.background}}>
+          style={{ backgroundColor: colors.background }}>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+              borderColor: colors.primary,
+              borderWidth: 1,
+              borderRadius: 8,
+              margin: 8,
+            }}>
+            <TextInput
+              value={searchText}
+              style={{
+                height: 40,
+                paddingLeft: 12,
+                width: Dimensions.get('window').width - 42,
+                fontFamily: 'LatoRegular',
+                fontSize: 16,
+                color: colors.text,
+              }}
+              placeholder={translations['Search by country name']}
+              placeholderTextColor="gray"
+              onChangeText={text => searchCountry(text)}
+            />
+            <TouchableOpacity
+              style={{ marginRight: 8 }}
+              onPress={() => searchCountry('')}>
+              {searchText === '' ? (
+                <Icon name="magnify" color={colors.text} size={24}></Icon>
+              ) : (
+                <Icon
+                  name="close-circle"
+                  color={colors.text}
+                  size={24}></Icon>
+              )}
+            </TouchableOpacity>
+          </View>
           <FlatList
-            ListHeaderComponent={
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
-                  alignItems: 'center',
-                  borderColor: colors.primary,
-                  borderWidth: 1,
-                  borderRadius: 8,
-                  margin: 8,
-                }}>
-                <TextInput
-                  value={searchText}
-                  style={{
-                    height: 40,
-                    paddingLeft: 12,
-                    width: Dimensions.get('window').width - 42,
-                    fontFamily: 'LatoRegular',
-                    fontSize: 16,
-                    color: colors.text,
-                  }}
-                  placeholder="Search by country name"
-                  placeholderTextColor="gray"
-                  onChangeText={text => searchCountry(text)}
-                />
-                <TouchableOpacity
-                  style={{marginRight: 8}}
-                  onPress={() => searchCountry('')}>
-                  {searchText === '' ? (
-                    <Icon name="magnify" color={colors.text} size={24}></Icon>
-                  ) : (
-                    <Icon
-                      name="close-circle"
-                      color={colors.text}
-                      size={24}></Icon>
-                  )}
-                </TouchableOpacity>
-              </View>
-            }
-            ListFooterComponent={<View style={{height: 10}}></View>}
+            // onScroll={Animated.event([
+            //   {
+            //     nativeEvent: {
+            //       contentOffset: { y: scrollY }
+            //     }
+            //   }
+            // ],
+            //   { useNativeDriver: true }
+            // )}
+
             data={filteredDataSource}
             keyExtractor={item => item.country}
             showsVerticalScrollIndicator={false}
@@ -135,15 +163,15 @@ const Worldmeter = ({navigation}) => {
                   alignItems: 'center',
                   marginTop: 12,
                 }}>
-                <Rtext style={{color: colors.text}}>
+                <Rtext style={{ color: colors.text }}>
                   Sorry, No Country Found
                 </Rtext>
               </View>
             }
-            renderItem={({item, index}) => {
+            renderItem={({ item, index }) => {
               return (
                 <Animatable.View
-                  animation="bounceIn"
+                  animation="fadeInRightBig"
                   duration={ANIM_DURATION}
                   style={{
                     marginHorizontal: 6,
@@ -165,7 +193,7 @@ const Worldmeter = ({navigation}) => {
                     borderWidth: 0.6,
                   }}>
                   <Rtext
-                    style={{textAlign: 'center', color: colors.text}}
+                    style={{ textAlign: 'center', color: colors.text }}
                     fontWeight={'bold'}>
                     {item.country + ' [' + formatNumber(item.cases) + ']'}
                   </Rtext>
@@ -176,54 +204,54 @@ const Worldmeter = ({navigation}) => {
                       marginVertical: 3,
                     }}></View>
                   <View style={styles.viewStyle}>
-                    <Rtext style={{color: colors.text}}>Active</Rtext>
-                    <Rtext style={{color: colors.text}}>
+                    <Rtext style={{ color: colors.text }}>Active</Rtext>
+                    <Rtext style={{ color: colors.text }}>
                       {formatNumber(item.active)}
                     </Rtext>
                   </View>
 
                   <View style={styles.viewStyle}>
-                    <Rtext style={{color: colors.text}}>Recovered</Rtext>
-                    <Rtext style={{color: colors.text}}>
+                    <Rtext style={{ color: colors.text }}>Recovered</Rtext>
+                    <Rtext style={{ color: colors.text }}>
                       {formatNumber(item.recovered)}
                     </Rtext>
                   </View>
 
                   <View style={styles.viewStyle}>
-                    <Rtext style={{color: colors.text}}>Deaths</Rtext>
-                    <Rtext style={{color: colors.text}}>
+                    <Rtext style={{ color: colors.text }}>Deaths</Rtext>
+                    <Rtext style={{ color: colors.text }}>
                       {formatNumber(item.deaths)}
                     </Rtext>
                   </View>
                   <View style={styles.viewStyle}>
-                    <Rtext style={{color: colors.text}}>Critical Cases</Rtext>
-                    <Rtext style={{color: colors.text}}>
+                    <Rtext style={{ color: colors.text }}>Critical Cases</Rtext>
+                    <Rtext style={{ color: colors.text }}>
                       {formatNumber(item.critical)}
                     </Rtext>
                   </View>
                   <View style={styles.viewStyle}>
-                    <Rtext style={{color: colors.text}}>Tested</Rtext>
-                    <Rtext style={{color: colors.text}}>
+                    <Rtext style={{ color: colors.text }}>Tested</Rtext>
+                    <Rtext style={{ color: colors.text }}>
                       {formatNumber(item.totalTests)}
                     </Rtext>
                   </View>
 
                   <View style={styles.viewStyle}>
-                    <Rtext style={{color: colors.text}}>Today's Case(s)</Rtext>
-                    <Rtext style={{color: colors.text}}>
+                    <Rtext style={{ color: colors.text }}>Today's Case(s)</Rtext>
+                    <Rtext style={{ color: colors.text }}>
                       {formatNumber(item.todayCases)}
                     </Rtext>
                   </View>
 
                   <View style={styles.viewStyle}>
-                    <Rtext style={{color: colors.text}}>Today's Death(s)</Rtext>
-                    <Rtext style={{color: colors.text}}>
+                    <Rtext style={{ color: colors.text }}>Today's Death(s)</Rtext>
+                    <Rtext style={{ color: colors.text }}>
                       {formatNumber(item.todayDeaths)}
                     </Rtext>
                   </View>
                 </Animatable.View>
               );
-            }}></FlatList>
+            }} />
         </ViewShot>
       )}
     </View>

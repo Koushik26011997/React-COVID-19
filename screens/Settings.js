@@ -1,12 +1,12 @@
-import {useTheme} from '@react-navigation/native';
-import React, {useContext} from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import {Rtext} from '../common/Rtext';
-import {LocalizationContext} from '../common/Translations';
+import { useTheme } from '@react-navigation/native';
+import React, { useContext } from 'react';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Rtext } from '../common/Rtext';
+import { LocalizationContext } from '../common/Translations';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export const Settings = ({navigation}) => {
-  const {colors, custom} = useTheme();
+export const Settings = ({ navigation }) => {
+  const { colors, custom } = useTheme();
   const {
     translations,
     appLanguage,
@@ -25,13 +25,13 @@ export const Settings = ({navigation}) => {
     setAppLanguage(currentLang);
     setTimeout(() => {
       navigation.goBack();
-    }, 3000);
+    }, 2000);
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: colors.background}}>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <View
-        style={{justifyContent: 'center', alignItems: 'center', padding: 12}}>
+        style={{ justifyContent: 'center', alignItems: 'center', padding: 12 }}>
         <Rtext fontSize={18} fontWeight={'bold'} color={colors.text}>
           {translations['Choose your language']}
         </Rtext>
@@ -39,6 +39,8 @@ export const Settings = ({navigation}) => {
 
       {translations.getAvailableLanguages().map((currentLang, i) => (
         <TouchableOpacity
+          delayPressIn={0}
+          delayPressOut={0}
           style={{
             backgroundColor: '#A7A7A7',
             paddingHorizontal: 12,

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef} from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import {
   View,
   ToastAndroid,
@@ -12,9 +12,9 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {Rtext} from '../common/Rtext';
-import {ANIM_DURATION} from '../Constant';
-import {request} from '../service/common';
+import { Rtext } from '../common/Rtext';
+import { ANIM_DURATION } from '../Constant';
+import { request } from '../service/common';
 import {
   formatNumber,
   SCREEN_HEIGHT,
@@ -23,21 +23,21 @@ import {
   showYearMonthDay,
 } from '../utility/MyUtility';
 import moment from 'moment';
-import {useScrollToTop, useTheme} from '@react-navigation/native';
+import { useScrollToTop, useTheme } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {AuthContext} from '../service/context';
+import { AuthContext } from '../service/context';
 import ViewShot from 'react-native-view-shot';
-import {LocalizationContext} from '../common/Translations';
+import { LocalizationContext } from '../common/Translations';
 
 const flatListRowWidth = Dimensions.get('window').width / 4;
 
 //https://api.covid19india.org/v4/min/data.min.json
 //https://api.covid19india.org/v4/min/data-2020-05-06.min.json
 
-const Datewise = ({navigation}) => {
+const Datewise = ({ navigation }) => {
   const flatlistRef = useRef();
-  const {viewContext} = React.useContext(AuthContext);
-  const {colors, custom} = useTheme();
+  const { viewContext } = React.useContext(AuthContext);
+  const { colors, custom } = useTheme();
   const [refreshing, setRefreshing] = React.useState(false);
   const [loader, setLoader] = React.useState(false);
   const [data, setData] = React.useState({});
@@ -109,10 +109,10 @@ const Datewise = ({navigation}) => {
 
   const listScrollToTop = () => {
     console.log('listScrollToTop');
-    flatlistRef.current.scrollToOffset({animated: true, offset: 0});
+    flatlistRef.current.scrollToOffset({ animated: true, offset: 0 });
   };
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       {loader ? (
         <Spinner visible={loader} />
       ) : (
@@ -124,7 +124,7 @@ const Datewise = ({navigation}) => {
             width: SCREEN_WIDTH,
             height: SCREEN_HEIGHT,
           }}
-          style={{backgroundColor: colors.background}}>
+          style={{ backgroundColor: colors.background }}>
           <View
             style={{
               margin: 12,
@@ -132,32 +132,32 @@ const Datewise = ({navigation}) => {
               alignItems: 'center',
             }}>
             <Rtext
-              style={{fontSize: 16, color: colors.text}}
+              style={{ fontSize: 16, color: colors.text }}
               fontWeight={'bold'}>
               {/* Total {stateData?.length} day's record found */}
               {showYearMonthDay(stateData?.length)}
             </Rtext>
           </View>
           <Animatable.View
-            style={[styles.boxContainerRow, {backgroundColor: colors.card}]}
-            animation="bounceIn"
+            style={[styles.boxContainerRow, { backgroundColor: colors.card }]}
+            animation="fadeInRightBig"
             duration={ANIM_DURATION}>
             <TouchableOpacity
               onPress={() => setOrdering('date')}
               style={
                 sort === 'date'
                   ? [
-                      styles.selectedBlock,
-                      {
-                        backgroundColor: '#A7A7A7',
-                      },
-                    ]
+                    styles.selectedBlock,
+                    {
+                      backgroundColor: '#A7A7A7',
+                    },
+                  ]
                   : [
-                      styles.selectedBlock,
-                      {
-                        justifyContent: 'flex-start',
-                      },
-                    ]
+                    styles.selectedBlock,
+                    {
+                      justifyContent: 'flex-start',
+                    },
+                  ]
               }>
               <Icon size={20} color={colors.text} name="swap-vertical-circle" />
               <Rtext
@@ -179,7 +179,7 @@ const Datewise = ({navigation}) => {
               onPress={() => setOrdering('dailyconfirmed')}
               style={
                 sort === 'dailyconfirmed'
-                  ? [styles.selectedBlock, {backgroundColor: '#A7A7A7'}]
+                  ? [styles.selectedBlock, { backgroundColor: '#A7A7A7' }]
                   : styles.selectedBlock
               }>
               <Icon size={20} color={colors.text} name="swap-vertical-circle" />
@@ -202,7 +202,7 @@ const Datewise = ({navigation}) => {
               onPress={() => setOrdering('dailyrecovered')}
               style={
                 sort === 'dailyrecovered'
-                  ? [styles.selectedBlock, {backgroundColor: '#A7A7A7'}]
+                  ? [styles.selectedBlock, { backgroundColor: '#A7A7A7' }]
                   : styles.selectedBlock
               }>
               <Icon size={20} color={colors.text} name="swap-vertical-circle" />
@@ -224,7 +224,7 @@ const Datewise = ({navigation}) => {
               onPress={() => setOrdering('dailydeceased')}
               style={
                 sort === 'dailydeceased'
-                  ? [styles.selectedBlock, {backgroundColor: '#A7A7A7'}]
+                  ? [styles.selectedBlock, { backgroundColor: '#A7A7A7' }]
                   : styles.selectedBlock
               }>
               <Icon size={20} color={colors.text} name="swap-vertical-circle" />
@@ -246,14 +246,14 @@ const Datewise = ({navigation}) => {
 
           {sort === 'date' && desc && (
             <Animatable.View
-              style={[styles.boxContainerRow, {backgroundColor: colors.card}]}
-              animation="bounceIn"
+              style={[styles.boxContainerRow, { backgroundColor: colors.card }]}
+              animation="fadeInRightBig"
               duration={ANIM_DURATION}>
               <View>
-                <Rtext style={[styles.flatListRow, {color: colors.text}]}>
+                <Rtext style={[styles.flatListRow, { color: colors.text }]}>
                   {moment().format('Do MMM, YYYY')}
                 </Rtext>
-                <Rtext style={[styles.flatListRow, {color: colors.text}]}>
+                <Rtext style={[styles.flatListRow, { color: colors.text }]}>
                   ({translations[moment().format('dddd')]})
                 </Rtext>
               </View>
@@ -262,14 +262,14 @@ const Datewise = ({navigation}) => {
                 <Rtext
                   style={[
                     styles.flatListRow,
-                    {textAlign: 'center', color: colors.text},
+                    { textAlign: 'center', color: colors.text },
                   ]}>
                   {data.statewise && formatNumber(data.statewise[0].confirmed)}
                 </Rtext>
                 <Rtext
                   style={[
                     styles.flatListRow,
-                    {color: custom.confirm, textAlign: 'center'},
+                    { color: custom.confirm, textAlign: 'center' },
                   ]}>
                   [+
                   {data.statewise &&
@@ -282,14 +282,14 @@ const Datewise = ({navigation}) => {
                 <Rtext
                   style={[
                     styles.flatListRow,
-                    {textAlign: 'center', color: colors.text},
+                    { textAlign: 'center', color: colors.text },
                   ]}>
                   {data.statewise && formatNumber(data.statewise[0].recovered)}
                 </Rtext>
                 <Rtext
                   style={[
                     styles.flatListRow,
-                    {color: '#28a745', textAlign: 'center'},
+                    { color: '#28a745', textAlign: 'center' },
                   ]}>
                   [+
                   {data.statewise &&
@@ -302,14 +302,14 @@ const Datewise = ({navigation}) => {
                 <Rtext
                   style={[
                     styles.flatListRow,
-                    {textAlign: 'center', color: colors.text},
+                    { textAlign: 'center', color: colors.text },
                   ]}>
                   {data.statewise && formatNumber(data.statewise[0].deaths)}
                 </Rtext>
                 <Rtext
                   style={[
                     styles.flatListRow,
-                    {color: custom.death, textAlign: 'center'},
+                    { color: custom.death, textAlign: 'center' },
                   ]}>
                   [+
                   {data.statewise &&
@@ -338,28 +338,28 @@ const Datewise = ({navigation}) => {
               refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
               }
-              renderItem={({item, index}) => {
+              renderItem={({ item, index }) => {
                 return (
                   <Animatable.View
                     style={[
                       styles.boxContainerRow,
-                      {backgroundColor: colors.card},
+                      { backgroundColor: colors.card },
                     ]}
-                    animation="bounceIn"
+                    animation="fadeInRightBig"
                     duration={ANIM_DURATION}>
                     <View>
-                      <Rtext style={[styles.flatListRow, {color: colors.text}]}>
+                      <Rtext style={[styles.flatListRow, { color: colors.text }]}>
                         {moment(moment(item.dateymd, 'YYYY-MM-DD')).format(
                           'Do MMM, YYYY',
                         )}
                       </Rtext>
-                      <Rtext style={[styles.flatListRow, {color: colors.text}]}>
+                      <Rtext style={[styles.flatListRow, { color: colors.text }]}>
                         (
                         {
                           translations[
-                            moment(moment(item.dateymd, 'YYYY-MM-DD')).format(
-                              'dddd',
-                            )
+                          moment(moment(item.dateymd, 'YYYY-MM-DD')).format(
+                            'dddd',
+                          )
                           ]
                         }
                         )
@@ -369,7 +369,7 @@ const Datewise = ({navigation}) => {
                       <Rtext
                         style={[
                           styles.flatListRow,
-                          {textAlign: 'center', color: colors.text},
+                          { textAlign: 'center', color: colors.text },
                         ]}>
                         {formatNumber(item.totalconfirmed)}
                       </Rtext>
@@ -377,7 +377,7 @@ const Datewise = ({navigation}) => {
                         <Rtext
                           style={[
                             styles.flatListRow,
-                            {color: custom.confirm, textAlign: 'center'},
+                            { color: custom.confirm, textAlign: 'center' },
                           ]}>
                           [+{formatNumber(item.dailyconfirmed)}]
                         </Rtext>
@@ -388,7 +388,7 @@ const Datewise = ({navigation}) => {
                       <Rtext
                         style={[
                           styles.flatListRow,
-                          {textAlign: 'center', color: colors.text},
+                          { textAlign: 'center', color: colors.text },
                         ]}>
                         {formatNumber(item.totalrecovered)}
                       </Rtext>
@@ -396,7 +396,7 @@ const Datewise = ({navigation}) => {
                         <Rtext
                           style={[
                             styles.flatListRow,
-                            {color: '#28a745', textAlign: 'center'},
+                            { color: '#28a745', textAlign: 'center' },
                           ]}>
                           [+{formatNumber(item.dailyrecovered)}]
                         </Rtext>
@@ -407,7 +407,7 @@ const Datewise = ({navigation}) => {
                       <Rtext
                         style={[
                           styles.flatListRow,
-                          {textAlign: 'center', color: colors.text},
+                          { textAlign: 'center', color: colors.text },
                         ]}>
                         {formatNumber(item.totaldeceased)}
                       </Rtext>
@@ -415,7 +415,7 @@ const Datewise = ({navigation}) => {
                         <Rtext
                           style={[
                             styles.flatListRow,
-                            {color: custom.death, textAlign: 'center'},
+                            { color: custom.death, textAlign: 'center' },
                           ]}>
                           [+{formatNumber(item.dailydeceased)}]
                         </Rtext>
@@ -447,7 +447,7 @@ const Datewise = ({navigation}) => {
 export default Datewise;
 
 const styles = StyleSheet.create({
-  flatListRow: {width: flatListRowWidth, fontSize: 14},
+  flatListRow: { width: flatListRowWidth },
   boxContainerRow: {
     justifyContent: 'space-around',
     flexDirection: 'row',

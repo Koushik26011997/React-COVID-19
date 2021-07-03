@@ -1,7 +1,8 @@
 export const BASE_URL = 'https://api.covid19india.org/';
-export const ANIM_DURATION = 3000;
+export const ANIM_DURATION = 1000;
 export const TAB_BAR_ICON_SIZE = 24;
 export const CARD_ELEVATION = 0;
+export const ANIM_NAME = "fadeInRightBig"
 
 export const FAQ_DATA = {
   factoids: [

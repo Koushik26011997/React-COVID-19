@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import moment from 'moment';
-import {Rtext} from '../common/Rtext';
-import {request} from '../service/common';
+import { Rtext } from '../common/Rtext';
+import { request } from '../service/common';
 import {
   formatNumber,
   openUrl,
@@ -23,24 +23,25 @@ import {
 } from '../utility/MyUtility';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {ANIM_DURATION} from '../Constant';
-import {useTheme} from '@react-navigation/native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import { ANIM_DURATION } from '../Constant';
+import { useTheme } from '@react-navigation/native';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import Popover, {
   PopoverMode,
   PopoverPlacement,
 } from 'react-native-popover-view';
 import ViewShot from 'react-native-view-shot';
-import {AuthContext} from '../service/context';
-import {LocalizationContext} from '../common/Translations';
+import { AuthContext } from '../service/context';
+import { LocalizationContext } from '../common/Translations';
+import { Tip } from 'react-native-tip';
 
 const flatListRowWidth = Dimensions.get('window').width / 5;
 
 //https://api.covid19india.org/v4/min/data.min.json
 //https://api.covid19india.org/v4/min/data-2020-05-06.min.json
 
-const Home = ({navigation}) => {
-  const {colors, custom} = useTheme();
+const Home = ({ navigation }) => {
+  const { colors, custom } = useTheme();
   const [refreshing, setRefreshing] = React.useState(false);
   const [loader, setLoader] = React.useState(false);
   const [data, setData] = React.useState({});
@@ -48,7 +49,7 @@ const Home = ({navigation}) => {
   const [sort, setSort] = React.useState('confirmed');
   const [desc, setDesc] = React.useState(true);
 
-  const {viewContext} = React.useContext(AuthContext);
+  const { viewContext } = React.useContext(AuthContext);
 
   //
   const {
@@ -124,27 +125,27 @@ const Home = ({navigation}) => {
             width: SCREEN_WIDTH,
             height: SCREEN_HEIGHT,
           }}
-          style={{backgroundColor: colors.background}}>
+          style={{ backgroundColor: colors.background }}>
           <Animatable.View
-            style={[styles.boxContainer, {backgroundColor: colors.card}]}
-            animation="bounceIn"
+            style={[styles.boxContainer, { backgroundColor: colors.card }]}
+            animation="fadeInRightBig"
             duration={ANIM_DURATION}>
             <Animatable.View
               style={styles.boxStyleFour}
-              animation="bounceIn"
+              animation="fadeInRightBig"
               duration={ANIM_DURATION}>
               <Rtext
-                style={{color: custom.confirm, fontSize: 15}}
+                style={{ color: custom.confirm, fontSize: 14 }}
                 fontWeight={'bold'}>
                 {translations['CONFIRMED']}
               </Rtext>
               <Rtext
                 fontWeight={'bold'}
-                style={{color: custom.confirm, marginTop: 6, fontSize: 15}}>
+                style={{ color: custom.confirm, marginTop: 6, fontSize: 14 }}>
                 {data.statewise && formatNumber(data.statewise[0].confirmed)}
               </Rtext>
               <Rtext
-                style={{color: custom.confirm, fontSize: 15}}
+                style={{ color: custom.confirm, fontSize: 14 }}
                 fontWeight={'bold'}>
                 [+
                 {data.statewise &&
@@ -155,16 +156,16 @@ const Home = ({navigation}) => {
 
             <Animatable.View
               style={styles.boxStyleFour}
-              animation="bounceIn"
+              animation="fadeInRightBig"
               duration={ANIM_DURATION}>
               <Rtext
                 fontWeight={'bold'}
-                style={{color: '#007bff', fontSize: 15}}
+                style={{ color: '#007bff', fontSize: 14 }}
                 fontWeight={'bold'}>
                 {translations['ACTIVE']}
               </Rtext>
               <Rtext
-                style={{color: '#007bff', marginTop: 6, fontSize: 15}}
+                style={{ color: '#007bff', marginTop: 6, fontSize: 14 }}
                 fontWeight={'bold'}>
                 {data.statewise && formatNumber(data.statewise[0].active)}
               </Rtext>
@@ -172,21 +173,21 @@ const Home = ({navigation}) => {
 
             <Animatable.View
               style={styles.boxStyleFour}
-              animation="bounceIn"
+              animation="fadeInRightBig"
               duration={ANIM_DURATION}>
               <Rtext
                 fontWeight={'bold'}
-                style={{color: '#28a745', fontSize: 15}}
+                style={{ color: '#28a745', fontSize: 14 }}
                 fontWeight={'bold'}>
                 {translations['RECOVERED']}
               </Rtext>
               <Rtext
                 fontWeight={'bold'}
-                style={{color: '#28a745', marginTop: 6, fontSize: 15}}>
+                style={{ color: '#28a745', marginTop: 6, fontSize: 14 }}>
                 {data.statewise && formatNumber(data.statewise[0].recovered)}
               </Rtext>
               <Rtext
-                style={{color: '#28a745', fontSize: 15}}
+                style={{ color: '#28a745', fontSize: 14 }}
                 fontWeight={'bold'}>
                 [+
                 {data.statewise &&
@@ -197,20 +198,20 @@ const Home = ({navigation}) => {
 
             <Animatable.View
               style={styles.boxStyleFour}
-              animation="bounceIn"
+              animation="fadeInRightBig"
               duration={ANIM_DURATION}>
               <Rtext
-                style={{color: custom.death, fontSize: 15}}
+                style={{ color: custom.death, fontSize: 14 }}
                 fontWeight={'bold'}>
                 {translations['DECEASED']}
               </Rtext>
               <Rtext
                 fontWeight={'bold'}
-                style={{color: custom.death, marginTop: 6, fontSize: 15}}>
+                style={{ color: custom.death, marginTop: 6, fontSize: 14 }}>
                 {data.statewise && formatNumber(data.statewise[0].deaths)}
               </Rtext>
               <Rtext
-                style={{color: custom.death, fontSize: 15}}
+                style={{ color: custom.death, fontSize: 14 }}
                 fontWeight={'bold'}>
                 [+
                 {data.statewise && formatNumber(data.statewise[0].deltadeaths)}]
@@ -220,7 +221,7 @@ const Home = ({navigation}) => {
 
           <FlatList
             extraData={data}
-            ListFooterComponent={<View style={{height: 6}}></View>}
+            ListFooterComponent={<View style={{ height: 6 }}></View>}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
@@ -229,11 +230,11 @@ const Home = ({navigation}) => {
                 <Animatable.View
                   style={[
                     styles.boxStyle,
-                    {justifyContent: 'center', backgroundColor: colors.card},
+                    { justifyContent: 'center', backgroundColor: colors.card },
                   ]}
-                  animation="bounceIn"
+                  animation="fadeInRightBig"
                   duration={ANIM_DURATION}>
-                  <Rtext style={{color: '#28a745', textAlign: 'center'}}>
+                  <Rtext style={{ color: '#28a745', textAlign: 'center' }}>
                     {translations['Last Updated On']}:
                     {data.statewise &&
                       moment(
@@ -250,13 +251,13 @@ const Home = ({navigation}) => {
                 <Animatable.View
                   style={[
                     styles.boxStyle,
-                    {justifyContent: 'center', backgroundColor: colors.card},
+                    { justifyContent: 'center', backgroundColor: colors.card },
                   ]}
-                  animation="bounceIn"
+                  animation="fadeInRightBig"
                   duration={ANIM_DURATION}>
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{ flexDirection: 'row' }}>
                     <Icon size={18} color="#28a745" name="shield-check" />
-                    <Rtext style={{color: '#28a745', marginLeft: 3}}>
+                    <Rtext style={{ color: '#28a745', marginLeft: 3 }}>
                       {data.tested &&
                         formatNumber(
                           data.tested[data.tested.length - 1]
@@ -274,7 +275,7 @@ const Home = ({navigation}) => {
                   </View>
                   <Rtext
                     style={{
-                      fontSize: 15,
+                      fontSize: 14,
                       color: '#28a745',
                       textDecorationLine: 'underline',
                       marginTop: 3,
@@ -287,7 +288,7 @@ const Home = ({navigation}) => {
                 </Animatable.View>
 
                 {data.tested &&
-                data.tested[data.tested.length - 1].totaldosesadministered !==
+                  data.tested[data.tested.length - 1].totaldosesadministered !==
                   '' ? (
                   <Animatable.View
                     style={[
@@ -298,10 +299,10 @@ const Home = ({navigation}) => {
                         backgroundColor: colors.card,
                       },
                     ]}
-                    animation="bounceIn"
+                    animation="fadeInRightBig"
                     duration={ANIM_DURATION}>
                     <Icon size={18} color="#28a745" name="shield-check" />
-                    <Rtext style={{color: '#28a745', marginLeft: 3}}>
+                    <Rtext style={{ color: '#28a745', marginLeft: 3 }}>
                       {data.tested &&
                         formatNumber(
                           data.tested[data.tested.length - 1]
@@ -320,10 +321,10 @@ const Home = ({navigation}) => {
                         backgroundColor: colors.card,
                       },
                     ]}
-                    animation="bounceIn"
+                    animation="fadeInRightBig"
                     duration={ANIM_DURATION}>
                     <Icon size={18} color="#28a745" name="shield-check" />
-                    <Rtext style={{color: '#28a745', marginLeft: 3}}>
+                    <Rtext style={{ color: '#28a745', marginLeft: 3 }}>
                       {data.tested &&
                         formatNumber(
                           data.tested[data.tested.length - 2]
@@ -337,9 +338,9 @@ const Home = ({navigation}) => {
                 <Animatable.View
                   style={[
                     styles.boxContainerRow,
-                    {backgroundColor: colors.card},
+                    { backgroundColor: colors.card },
                   ]}
-                  animation="bounceIn"
+                  animation="fadeInRightBig"
                   duration={ANIM_DURATION}>
                   <Rtext
                     fontWeight={'bold'}
@@ -348,7 +349,7 @@ const Home = ({navigation}) => {
                         marginLeft: 6,
                         color: colors.text,
                         width: flatListRowWidth + 10,
-                        fontSize: 14,
+                        fontSize: 13,
                       },
                     ]}>
                     {translations['STATE']}
@@ -357,7 +358,7 @@ const Home = ({navigation}) => {
                     onPress={() => setOrdering('confirmed')}
                     style={
                       sort === 'confirmed'
-                        ? [styles.selectedBlock, {backgroundColor: '#A7A7A7'}]
+                        ? [styles.selectedBlock, { backgroundColor: '#A7A7A7' }]
                         : styles.selectedBlock
                     }>
                     <Icon
@@ -369,7 +370,7 @@ const Home = ({navigation}) => {
                       fontWeight={'bold'}
                       style={[
                         {
-                          fontSize: 14,
+                          fontSize: 13,
                           marginLeft: 3,
                           textAlign: 'center',
                           color: colors.text,
@@ -382,7 +383,7 @@ const Home = ({navigation}) => {
                     onPress={() => setOrdering('active')}
                     style={
                       sort === 'active'
-                        ? [styles.selectedBlock, {backgroundColor: '#A7A7A7'}]
+                        ? [styles.selectedBlock, { backgroundColor: '#A7A7A7' }]
                         : styles.selectedBlock
                     }>
                     <Icon
@@ -394,7 +395,7 @@ const Home = ({navigation}) => {
                       fontWeight={'bold'}
                       style={[
                         {
-                          fontSize: 14,
+                          fontSize: 13,
                           marginLeft: 3,
                           textAlign: 'center',
                           color: colors.text,
@@ -407,7 +408,7 @@ const Home = ({navigation}) => {
                     onPress={() => setOrdering('recovered')}
                     style={
                       sort === 'recovered'
-                        ? [styles.selectedBlock, {backgroundColor: '#A7A7A7'}]
+                        ? [styles.selectedBlock, { backgroundColor: '#A7A7A7' }]
                         : styles.selectedBlock
                     }>
                     <Icon
@@ -419,7 +420,7 @@ const Home = ({navigation}) => {
                       fontWeight={'bold'}
                       style={[
                         {
-                          fontSize: 14,
+                          fontSize: 13,
                           marginLeft: 3,
                           textAlign: 'center',
                           color: colors.text,
@@ -432,7 +433,7 @@ const Home = ({navigation}) => {
                     onPress={() => setOrdering('deaths')}
                     style={
                       sort === 'deaths'
-                        ? [styles.selectedBlock, {backgroundColor: '#A7A7A7'}]
+                        ? [styles.selectedBlock, { backgroundColor: '#A7A7A7' }]
                         : styles.selectedBlock
                     }>
                     <Icon
@@ -444,7 +445,7 @@ const Home = ({navigation}) => {
                       fontWeight={'bold'}
                       style={[
                         {
-                          fontSize: 14,
+                          fontSize: 13,
                           marginLeft: 3,
                           textAlign: 'center',
                           color: colors.text,
@@ -462,7 +463,7 @@ const Home = ({navigation}) => {
             })}
             keyExtractor={item => item.statecode}
             showsVerticalScrollIndicator={false}
-            renderItem={({item, index}) => {
+            renderItem={({ item, index }) => {
               return (
                 // <TouchableOpacity onPress={() => navigation.navigate('StateDetails', { statecode: item.statecode })}>
 
@@ -470,40 +471,43 @@ const Home = ({navigation}) => {
                   <Animatable.View
                     style={[
                       styles.boxContainerRow,
-                      {backgroundColor: colors.card},
+                      { backgroundColor: colors.card },
                     ]}
-                    animation="bounceIn"
+                    animation="fadeInRightBig"
                     duration={ANIM_DURATION}>
                     {item.statenotes !== '' ? (
-                      <Popover
-                        backgroundStyle={{
-                          backgroundColor: 'white',
+
+                      <Tip
+                        titleStyle={{
+                          textAlign: 'center', color: colors.text,
+                          fontFamily: 'LatoBold'
                         }}
-                        from={
-                          <TouchableOpacity
-                            style={[
-                              {
-                                color: colors.text,
-                                width: flatListRowWidth + 10,
-                              },
-                            ]}>
-                            <Rtext
-                              fontWeight={'bold'}
-                              style={{
-                                color: colors.text,
-                              }}>
-                              {translations[item.state] +
-                                '*\n' +
-                                '(' +
-                                translations['Rank'] +
-                                ': #' +
-                                (index + 1) +
-                                ')'}
-                            </Rtext>
-                          </TouchableOpacity>
-                        }>
-                        <Rtext>{item.statenotes}</Rtext>
-                      </Popover>
+                        bodyStyle={{ color: colors.text, fontFamily: 'LatoRegular', marginTop: 8 }}
+                        title={translations[item.state]}
+                        body={item.statenotes}
+                      >
+                        <TouchableOpacity
+                          style={[
+                            {
+                              color: colors.text,
+                              width: flatListRowWidth + 10,
+                            },
+                          ]}>
+                          <Rtext
+                            fontWeight={'bold'}
+                            style={{
+                              color: colors.text,
+                            }}>
+                            {translations[item.state] +
+                              '*\n' +
+                              '(' +
+                              translations['Rank'] +
+                              ': #' +
+                              (index + 1) +
+                              ')'}
+                          </Rtext>
+                        </TouchableOpacity>
+                      </Tip>
                     ) : (
                       <Rtext
                         fontWeight={'bold'}
@@ -527,7 +531,7 @@ const Home = ({navigation}) => {
                       <Rtext
                         style={[
                           styles.flatListRow,
-                          {textAlign: 'center', color: colors.text},
+                          { textAlign: 'center', color: colors.text },
                         ]}>
                         {formatNumber(item.confirmed)}
                       </Rtext>
@@ -535,7 +539,7 @@ const Home = ({navigation}) => {
                         <Rtext
                           style={[
                             styles.flatListRow,
-                            {color: custom.confirm, textAlign: 'center'},
+                            { color: custom.confirm, textAlign: 'center' },
                           ]}>
                           [+{formatNumber(item.deltaconfirmed)}]
                         </Rtext>
@@ -545,7 +549,7 @@ const Home = ({navigation}) => {
                     <Rtext
                       style={[
                         styles.flatListRow,
-                        {textAlign: 'center', color: colors.text},
+                        { textAlign: 'center', color: colors.text },
                       ]}>
                       {formatNumber(item.active)}
                     </Rtext>
@@ -554,7 +558,7 @@ const Home = ({navigation}) => {
                       <Rtext
                         style={[
                           styles.flatListRow,
-                          {textAlign: 'center', color: colors.text},
+                          { textAlign: 'center', color: colors.text },
                         ]}>
                         {formatNumber(item.recovered)}
                       </Rtext>
@@ -562,7 +566,7 @@ const Home = ({navigation}) => {
                         <Rtext
                           style={[
                             styles.flatListRow,
-                            {color: '#28a745', textAlign: 'center'},
+                            { color: '#28a745', textAlign: 'center' },
                           ]}>
                           [+{formatNumber(item.deltarecovered)}]
                         </Rtext>
@@ -573,7 +577,7 @@ const Home = ({navigation}) => {
                       <Rtext
                         style={[
                           styles.flatListRow,
-                          {textAlign: 'center', color: colors.text},
+                          { textAlign: 'center', color: colors.text },
                         ]}>
                         {formatNumber(item.deaths)}
                       </Rtext>
@@ -581,7 +585,7 @@ const Home = ({navigation}) => {
                         <Rtext
                           style={[
                             styles.flatListRow,
-                            {color: custom.death, textAlign: 'center'},
+                            { color: custom.death, textAlign: 'center' },
                           ]}>
                           [+{formatNumber(item.deltadeaths)}]
                         </Rtext>
@@ -624,8 +628,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
   },
-  flatListRow: {width: flatListRowWidth - 10, fontSize: 14},
-  boxStyleFour: {alignItems: 'center'},
+  flatListRow: { width: flatListRowWidth - 10 },
+  boxStyleFour: { alignItems: 'center' },
   selectedBlock: {
     paddingVertical: 3,
     justifyContent: 'center',

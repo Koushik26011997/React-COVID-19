@@ -33,7 +33,7 @@ const FAQ = ({navigation}) => {
           renderItem={({item, index}) => {
             return (
               <Animatable.View
-                animation="bounceIn"
+                animation="fadeInRightBig"
                 duration={ANIM_DURATION}
                 style={{
                   width: Dimensions.get('window').width - 12,

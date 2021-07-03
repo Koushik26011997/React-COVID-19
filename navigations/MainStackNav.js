@@ -17,6 +17,7 @@ import RNFS from 'react-native-fs';
 import {AuthContext} from '../service/context';
 import {LocalizationContext} from '../common/Translations';
 import {Settings} from '../screens/Settings';
+import Editor from '../screens/Editor';
 
 const MainStack = createStackNavigator();
 
@@ -177,14 +178,14 @@ const MainStackNav = ({navigation}) => {
           }}
         />
 
-        {/* <MainStack.Screen
-          name="Vaccine"
-          component={Vaccine}
+        <MainStack.Screen
+          name="Editor"
+          component={Editor}
           options={{
             ...options,
-            headerTitle: translations['COWIN Vaccination'],
+            headerTitle: 'Editor',
           }}
-        /> */}
+        />
 
         <MainStack.Screen
           name="Settings"

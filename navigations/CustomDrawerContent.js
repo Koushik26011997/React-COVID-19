@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -12,20 +12,21 @@ import {
   ToastAndroid,
   Alert,
   BackHandler,
+  Vibration,
 } from 'react-native';
-import {Rtext} from '../common/Rtext';
-import {ANIM_DURATION} from '../Constant';
+import { Rtext } from '../common/Rtext';
+import { ANIM_DURATION } from '../Constant';
 import * as Animatable from 'react-native-animatable';
-import {useTheme} from '@react-navigation/native';
-import {AuthContext} from '../service/context';
+import { useTheme } from '@react-navigation/native';
+import { AuthContext } from '../service/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {DrawerContent, DrawerItem} from '@react-navigation/drawer';
+import { DrawerContent, DrawerItem } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {LocalizationContext} from '../common/Translations';
+import { LocalizationContext } from '../common/Translations';
 
 const CustomDrawerContent = props => {
-  const {toggleTheme} = React.useContext(AuthContext);
-  const {colors, custom} = useTheme();
+  const { toggleTheme } = React.useContext(AuthContext);
+  const { colors, custom } = useTheme();
   const [page, setPage] = useState('');
   const [isEnabled, setIsEnabled] = useState(false);
 
@@ -57,11 +58,6 @@ const CustomDrawerContent = props => {
       page: 'FAQ',
       icon: 'help-circle',
     },
-    // {
-    //   label: 'Current Updates',
-    //   page: 'Update',
-    //   icon: 'update',
-    // },
     {
       label: translations['Lockdown Protocols'],
       page: 'Lockdown',
@@ -116,18 +112,19 @@ const CustomDrawerContent = props => {
 
   const clickOnProduct = page => {
     if (page === 'Exit') {
+      Vibration.vibrate([100, 200, 300, 400, 500], true);
       Alert.alert(
         translations['COVID-19 Tracker'],
         translations['Do you want to exit?'],
         [
           {
             text: translations['No'],
-            onPress: () => null,
+            onPress: () => Vibration.cancel(),
             style: 'cancel',
           },
-          {text: translations['Yes'], onPress: () => closeApp()},
+          { text: translations['Yes'], onPress: () => (Vibration.cancel(), closeApp()) },
         ],
-        {cancelable: false},
+        { cancelable: false },
       );
       return true;
     } else {
@@ -144,7 +141,7 @@ const CustomDrawerContent = props => {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: colors.card}}>
+    <View style={{ flex: 1, backgroundColor: colors.card }}>
       <ScrollView {...props}>
         <ImageBackground
           source={require('../icons/head.png')}
@@ -196,28 +193,28 @@ const CustomDrawerContent = props => {
         </ImageBackground>
 
         <FlatList
-          style={{marginTop: 6}}
+          style={{ marginTop: 6 }}
           data={arr}
           keyExtractor={item => item.page.toString()}
-          renderItem={({item, index}) => {
+          renderItem={({ item, index }) => {
             return (
-              <Animatable.View animation="bounceIn" duration={ANIM_DURATION}>
+              <Animatable.View animation="fadeInRightBig" duration={ANIM_DURATION}>
                 <DrawerItem
-                  icon={({color, size}) => (
+                  icon={({ color, size }) => (
                     <Icon
                       name={item.icon}
                       size={24}
-                      style={{color: colors.text}}></Icon>
+                      style={{ color: colors.text }}></Icon>
                   )}
                   label={item.label}
-                  labelStyle={[styles.rowStyle, {color: colors.text}]}
+                  labelStyle={[styles.rowStyle, { color: colors.text }]}
                   onPress={() => clickOnProduct(item.page)}></DrawerItem>
               </Animatable.View>
             );
           }}></FlatList>
 
         <Animatable.View
-          animation="bounceIn"
+          animation="fadeInRightBig"
           duration={ANIM_DURATION}
           style={{
             flexDirection: 'row',
@@ -226,16 +223,16 @@ const CustomDrawerContent = props => {
             marginStart: 18,
             marginTop: 12,
           }}>
-          <Rtext style={[styles.rowStyle, {color: colors.text}]}>
+          <Rtext style={[styles.rowStyle, { color: colors.text }]}>
             {translations['Dark Mode']}
           </Rtext>
           <Switch
-            trackColor={{false: '#767577', true: '#81b0ff'}}
+            trackColor={{ false: '#767577', true: '#81b0ff' }}
             thumbColor={isEnabled ? '#f5dd4b' : '#ffffff'}
             ios_backgroundColor="#3e3e3e"
             value={isEnabled}
             onValueChange={toggleSwitch}
-            style={[styles.rowStyle, {marginRight: 12}]}
+            style={[styles.rowStyle, { marginRight: 12 }]}
           />
         </Animatable.View>
       </ScrollView>
@@ -246,5 +243,5 @@ const CustomDrawerContent = props => {
 export default CustomDrawerContent;
 
 const styles = StyleSheet.create({
-  rowStyle: {fontSize: 16, fontFamily: 'LatoBold'},
+  rowStyle: { fontSize: 16, fontFamily: 'LatoBold' },
 });

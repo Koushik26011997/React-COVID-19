@@ -8,7 +8,7 @@ const CustomHeader = ({style, text, onPress = null}) => {
   const {colors, custom} = useTheme();
   return (
     <Animatable.View
-      animation="bounceIn"
+      animation="fadeInRightBig"
       duration={ANIM_DURATION}
       style={[style, {backgroundColor: custom.header, padding: 6}]}>
       <Rtext

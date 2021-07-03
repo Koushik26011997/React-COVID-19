@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -12,8 +12,8 @@ import {
   RefreshControl,
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {Rtext} from '../common/Rtext';
-import {request} from '../service/common';
+import { Rtext } from '../common/Rtext';
+import { request } from '../service/common';
 import {
   formatNumber,
   SCREEN_HEIGHT,
@@ -21,18 +21,18 @@ import {
   showFlashMessage,
 } from '../utility/MyUtility';
 import * as Animatable from 'react-native-animatable';
-import {ANIM_DURATION} from '../Constant';
-import {useTheme} from '@react-navigation/native';
+import { ANIM_DURATION } from '../Constant';
+import { useTheme } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {AuthContext} from '../service/context';
+import { AuthContext } from '../service/context';
 import ViewShot from 'react-native-view-shot';
-import {LocalizationContext} from '../common/Translations';
+import { LocalizationContext } from '../common/Translations';
 
 const devWidth = Dimensions.get('window').width;
 
-const Districtwise = ({navigation}) => {
-  const {viewContext} = React.useContext(AuthContext);
-  const {colors, custom} = useTheme();
+const Districtwise = ({ navigation }) => {
+  const { viewContext } = React.useContext(AuthContext);
+  const { colors, custom } = useTheme();
   const [refreshing, setRefreshing] = React.useState(false);
   const [loader, setLoader] = React.useState(false);
   const [data, setData] = React.useState([]);
@@ -110,7 +110,7 @@ const Districtwise = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       {loader ? (
         <Spinner visible={loader} />
       ) : (
@@ -122,7 +122,7 @@ const Districtwise = ({navigation}) => {
             width: SCREEN_WIDTH,
             height: SCREEN_HEIGHT,
           }}
-          style={{backgroundColor: colors.background}}>
+          style={{ backgroundColor: colors.background }}>
           <FlatList
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -130,7 +130,7 @@ const Districtwise = ({navigation}) => {
             showsVerticalScrollIndicator={false}
             data={data}
             keyExtractor={item => item.state.toString()}
-            renderItem={({item, index}) => {
+            renderItem={({ item, index }) => {
               return (
                 <View
                   style={{
@@ -154,12 +154,12 @@ const Districtwise = ({navigation}) => {
                       style={
                         showDistricts === index
                           ? {
-                              textAlign: 'center',
-                              fontSize: 16,
+                            textAlign: 'center',
+                            fontSize: 16,
 
-                              color: colors.text,
-                            }
-                          : {color: colors.text}
+                            color: colors.text,
+                          }
+                          : { color: colors.text }
                       }>
                       {translations[item.state]}
                     </Rtext>
@@ -178,9 +178,9 @@ const Districtwise = ({navigation}) => {
                         <Animatable.View
                           style={[
                             styles.boxContainerRow,
-                            {marginTop: 10, backgroundColor: colors.card},
+                            { marginTop: 10, backgroundColor: colors.card },
                           ]}
-                          animation="bounceIn"
+                          animation="fadeInRightBig"
                           duration={ANIM_DURATION}>
                           <Rtext
                             fontWeight={'bold'}
@@ -198,9 +198,9 @@ const Districtwise = ({navigation}) => {
                             style={
                               sort === 'confirmed'
                                 ? [
-                                    styles.selectedBlock,
-                                    {backgroundColor: '#A7A7A7'},
-                                  ]
+                                  styles.selectedBlock,
+                                  { backgroundColor: '#A7A7A7' },
+                                ]
                                 : styles.selectedBlock
                             }>
                             <Icon
@@ -227,9 +227,9 @@ const Districtwise = ({navigation}) => {
                             style={
                               sort === 'active'
                                 ? [
-                                    styles.selectedBlock,
-                                    {backgroundColor: '#A7A7A7'},
-                                  ]
+                                  styles.selectedBlock,
+                                  { backgroundColor: '#A7A7A7' },
+                                ]
                                 : styles.selectedBlock
                             }>
                             <Icon
@@ -256,9 +256,9 @@ const Districtwise = ({navigation}) => {
                             style={
                               sort === 'recovered'
                                 ? [
-                                    styles.selectedBlock,
-                                    {backgroundColor: '#A7A7A7'},
-                                  ]
+                                  styles.selectedBlock,
+                                  { backgroundColor: '#A7A7A7' },
+                                ]
                                 : styles.selectedBlock
                             }>
                             <Icon
@@ -285,9 +285,9 @@ const Districtwise = ({navigation}) => {
                             style={
                               sort === 'deceased'
                                 ? [
-                                    styles.selectedBlock,
-                                    {backgroundColor: '#A7A7A7'},
-                                  ]
+                                  styles.selectedBlock,
+                                  { backgroundColor: '#A7A7A7' },
+                                ]
                                 : styles.selectedBlock
                             }>
                             <Icon
@@ -317,14 +317,14 @@ const Districtwise = ({navigation}) => {
                         else return parseInt(a[sort]) > parseInt(b[sort]);
                       })}
                       keyExtractor={item => item.district.toString()}
-                      renderItem={({item, index}) => {
+                      renderItem={({ item, index }) => {
                         return (
                           <Animatable.View
                             style={[
                               styles.boxContainerRow,
-                              {backgroundColor: colors.card},
+                              { backgroundColor: colors.card },
                             ]}
-                            animation="bounceIn"
+                            animation="fadeInRightBig"
                             duration={ANIM_DURATION}>
                             <Rtext
                               fontWeight={'bold'}
@@ -347,7 +347,7 @@ const Districtwise = ({navigation}) => {
                               <Rtext
                                 style={[
                                   styles.flatListRow,
-                                  {textAlign: 'center', color: colors.text},
+                                  { textAlign: 'center', color: colors.text },
                                 ]}>
                                 {formatNumber(item.confirmed)}
                               </Rtext>
@@ -368,7 +368,7 @@ const Districtwise = ({navigation}) => {
                             <Rtext
                               style={[
                                 styles.flatListRow,
-                                {textAlign: 'center', color: colors.text},
+                                { textAlign: 'center', color: colors.text },
                               ]}>
                               {formatNumber(item.active)}
                             </Rtext>
@@ -377,7 +377,7 @@ const Districtwise = ({navigation}) => {
                               <Rtext
                                 style={[
                                   styles.flatListRow,
-                                  {textAlign: 'center', color: colors.text},
+                                  { textAlign: 'center', color: colors.text },
                                 ]}>
                                 {formatNumber(item.recovered)}
                               </Rtext>
@@ -385,7 +385,7 @@ const Districtwise = ({navigation}) => {
                                 <Rtext
                                   style={[
                                     styles.flatListRow,
-                                    {color: '#28a745', textAlign: 'center'},
+                                    { color: '#28a745', textAlign: 'center' },
                                   ]}>
                                   [+{formatNumber(item.delta.recovered)}]
                                 </Rtext>
@@ -396,7 +396,7 @@ const Districtwise = ({navigation}) => {
                               <Rtext
                                 style={[
                                   styles.flatListRow,
-                                  {textAlign: 'center', color: colors.text},
+                                  { textAlign: 'center', color: colors.text },
                                 ]}>
                                 {formatNumber(item.deceased)}
                               </Rtext>
@@ -404,7 +404,7 @@ const Districtwise = ({navigation}) => {
                                 <Rtext
                                   style={[
                                     styles.flatListRow,
-                                    {color: custom.death, textAlign: 'center'},
+                                    { color: custom.death, textAlign: 'center' },
                                   ]}>
                                   [+{formatNumber(item.delta.deceased)}]
                                 </Rtext>
@@ -427,7 +427,7 @@ const Districtwise = ({navigation}) => {
 export default Districtwise;
 
 const styles = StyleSheet.create({
-  flatListRow: {width: devWidth / 5 - 10, fontSize: 14},
+  flatListRow: { width: devWidth / 5 - 10 },
   boxContainerRow: {
     justifyContent: 'space-around',
     flexDirection: 'row',

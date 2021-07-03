@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -9,28 +9,28 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {Rtext} from '../common/Rtext';
-import {ANIM_DURATION, CARD_ELEVATION} from '../Constant';
-import {request} from '../service/common';
+import { Rtext } from '../common/Rtext';
+import { ANIM_DURATION, CARD_ELEVATION } from '../Constant';
+import { request } from '../service/common';
 import {
   openUrl,
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
   showFlashMessage,
 } from '../utility/MyUtility';
-import {CustomHeader} from '../common/Header';
+import { CustomHeader } from '../common/Header';
 import moment from 'moment';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useTheme} from '@react-navigation/native';
-import {AuthContext} from '../service/context';
+import { useTheme } from '@react-navigation/native';
+import { AuthContext } from '../service/context';
 import ViewShot from 'react-native-view-shot';
 
 const pageWidth = Dimensions.get('window').width - 12;
 
-const News = ({navigation}) => {
-  const {viewContext} = React.useContext(AuthContext);
-  const {colors, custom} = useTheme();
+const News = ({ navigation }) => {
+  const { viewContext } = React.useContext(AuthContext);
+  const { colors, custom } = useTheme();
   const [loader, setLoader] = React.useState(false);
   const [data, setData] = React.useState({});
 
@@ -87,17 +87,17 @@ const News = ({navigation}) => {
             width: SCREEN_WIDTH,
             height: SCREEN_HEIGHT,
           }}
-          style={{backgroundColor: colors.background}}>
+          style={{ backgroundColor: colors.background }}>
           <FlatList
-            ListHeaderComponent={<View style={{marginTop: 6}}></View>}
+            ListHeaderComponent={<View style={{ marginTop: 6 }}></View>}
             showsVerticalScrollIndicator={false}
             data={data}
             extraData={data}
             keyExtractor={item => item.title}
-            renderItem={({item, index}) => {
+            renderItem={({ item, index }) => {
               return (
                 <Animatable.View
-                  animation="bounceIn"
+                  animation="fadeInRightBig"
                   duration={ANIM_DURATION}
                   style={{
                     marginHorizontal: 6,
@@ -117,7 +117,7 @@ const News = ({navigation}) => {
                     borderWidth: 0.6,
                     borderColor: colors.primary,
                   }}>
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{ flexDirection: 'row' }}>
                     <Image
                       source={{
                         uri: item.urlToImage,
@@ -127,8 +127,8 @@ const News = ({navigation}) => {
                         height: pageWidth / 4,
                         borderRadius: 3,
                       }}></Image>
-                    <View style={{width: pageWidth / 2, marginHorizontal: 10}}>
-                      <Rtext style={{color: colors.text}} fontWeight={'bold'}>
+                    <View style={{ width: pageWidth / 2, marginHorizontal: 10 }}>
+                      <Rtext style={{ color: colors.text }} fontWeight={'bold'}>
                         {item.title}
                       </Rtext>
                       <View
@@ -140,7 +140,7 @@ const News = ({navigation}) => {
                         <Rtext
                           style={{
                             paddingTop: 8,
-                            fontSize: 14,
+
                             color: '#007BFF',
                             color: colors.text,
                           }}>
@@ -149,7 +149,7 @@ const News = ({navigation}) => {
                         <Rtext
                           style={{
                             paddingTop: 8,
-                            fontSize: 14,
+
                             color: '#007BFF',
                             color: colors.text,
                           }}>
@@ -162,18 +162,18 @@ const News = ({navigation}) => {
                       <Icon
                         name="share-circle"
                         size={24}
-                        style={{color: colors.text}}></Icon>
+                        style={{ color: colors.text }}></Icon>
                     </TouchableOpacity>
                   </View>
 
                   <Rtext
-                    style={{paddingTop: 8, fontSize: 15, color: colors.text}}>
+                    style={{ paddingTop: 8, color: colors.text }}>
                     {item.description}
                     <Rtext
                       onPress={() => openUrl(item.url)}
                       style={{
                         paddingTop: 8,
-                        fontSize: 15,
+
                         color: custom.answer,
                       }}>
                       {' '}
@@ -192,5 +192,5 @@ const News = ({navigation}) => {
 export default News;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, alignItems: 'center', justifyContent: 'center'},
+  container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
 });

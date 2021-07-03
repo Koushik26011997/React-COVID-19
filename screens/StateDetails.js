@@ -75,7 +75,7 @@ const StateDetails = ({ navigation, route }) => {
                 renderItem={({ item, index }) => {
                     return (
                         <TouchableOpacity>
-                            {/* <Animatable.View style={styles.boxContainerRow} animation="bounceIn" duration={ANIM_DURATION}>
+                            {/* <Animatable.View style={styles.boxContainerRow} animation="fadeInRightBig" duration={ANIM_DURATION}>
                                         <Rtext style={styles.flatListRow} numberOfLines={1}>{item.state}</Rtext>
 
                                         <View>

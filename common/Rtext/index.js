@@ -1,11 +1,11 @@
 import React from 'react';
-import {Text} from 'react-native';
-import {normalizeSize} from '../../utility/MyUtility';
+import { Text } from 'react-native';
+import { normalizeSize } from '../../utility/MyUtility';
 
 const Rtext = ({
   style = {},
   normalizeFontSize = 0,
-  fontSize = 14.5,
+  fontSize = 13,
   lgFontSize = 0,
   smFontSize = 0,
   fontStyle = 'normal',
@@ -35,4 +35,4 @@ const Rtext = ({
   );
 };
 
-export {Rtext};
+export { Rtext };
