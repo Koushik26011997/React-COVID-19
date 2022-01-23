@@ -1,13 +1,13 @@
-import {useTheme} from '@react-navigation/native';
-import React, {useEffect} from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
-import {LineChart, PieChart, ProgressChart} from 'react-native-chart-kit';
+import { useTheme } from '@react-navigation/native';
+import React, { useEffect } from 'react';
+import { View, StyleSheet, Dimensions } from 'react-native';
+import { LineChart, PieChart, ProgressChart } from 'react-native-chart-kit';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {request} from '../service/common';
-import {SCREEN_WIDTH, showFlashMessage} from '../utility/MyUtility';
+import { request } from '../service/common';
+import { SCREEN_WIDTH, showFlashMessage } from '../utility/MyUtility';
 
-const Chart = ({navigation}) => {
-  const {colors, custom} = useTheme();
+const Chart = ({ navigation }) => {
+  const { colors, custom } = useTheme();
   let pieData = [];
   const [loader, setLoader] = React.useState(false);
   const [chartData, setChartData] = React.useState([]);
@@ -91,7 +91,7 @@ const Chart = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       {loader ? (
         <Spinner visible={loader} />
       ) : (

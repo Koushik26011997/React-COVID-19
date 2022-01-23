@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
-import React, { useEffect, useState, useRef } from 'react';
-import { LogBox, StatusBar } from 'react-native';
-import { useNetInfo } from '@react-native-community/netinfo';
+import React, {useEffect, useState, useRef} from 'react';
+import {LogBox, StatusBar} from 'react-native';
+import {useNetInfo} from '@react-native-community/netinfo';
 import {
   NavigationContainer,
   DarkTheme,
@@ -10,9 +10,9 @@ import {
 import NoInternet from './screens/NoInternet';
 import RootDrawerNav from './navigations/RootDrawerNav';
 import SplashScreen from 'react-native-splash-screen';
-import { AuthContext } from './service/context';
+import {AuthContext} from './service/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LocalizationProvider } from './common/Translations';
+import {LocalizationProvider} from './common/Translations';
 import TipProvider from 'react-native-tip';
 
 const App = () => {

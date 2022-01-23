@@ -1,9 +1,9 @@
-import React, {useRef, useEffect, useContext} from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import React, { useRef, useEffect, useContext } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
 import BottomTabNav from './BottomTavNav';
-import {TouchableOpacity, View} from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import FlashMessage from 'react-native-flash-message';
-import {normalizeSize} from '../utility/MyUtility';
+import { normalizeSize } from '../utility/MyUtility';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FAQ from '../screens/FAQ';
 import Lockdown from '../screens/Lockdown';
@@ -14,15 +14,15 @@ import Vaccine from '../screens/Vaccine';
 import Resources from '../screens/Resources';
 import Share from 'react-native-share';
 import RNFS from 'react-native-fs';
-import {AuthContext} from '../service/context';
-import {LocalizationContext} from '../common/Translations';
-import {Settings} from '../screens/Settings';
+import { AuthContext } from '../service/context';
+import { LocalizationContext } from '../common/Translations';
+import { Settings } from '../screens/Settings';
 import Editor from '../screens/Editor';
 
 const MainStack = createStackNavigator();
 
-const MainStackNav = ({navigation}) => {
-  const {viewContext} = React.useContext(AuthContext);
+const MainStackNav = ({ navigation }) => {
+  const { viewContext } = React.useContext(AuthContext);
 
   //
   const {
@@ -46,7 +46,7 @@ const MainStackNav = ({navigation}) => {
       shadowRadius: 3.75,
       elevation: 3,
     },
-    headerForceInset: {top: 'never', bottom: 'never'},
+    headerForceInset: { top: 'never', bottom: 'never' },
     stackAnimation: 'fade',
     headerTopInsetEnabled: false,
     headerTitle: translations['COVID-19 Tracker'],
@@ -61,13 +61,13 @@ const MainStackNav = ({navigation}) => {
     },
     headerRight: () => {
       return (
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <TouchableOpacity onPress={() => captureAndShareScreenshot()}>
             <Icon
               color="white"
               name="share-circle"
               size={24}
-              style={{marginRight: 12}}
+              style={{ marginRight: 12 }}
             />
           </TouchableOpacity>
         </View>
@@ -105,17 +105,17 @@ const MainStackNav = ({navigation}) => {
         <MainStack.Screen
           name="BottomTabNav"
           component={BottomTabNav}
-          options={({route}) => ({
+          options={({ route }) => ({
             ...options,
             headerLeft: () => {
               return (
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <TouchableOpacity onPress={() => navigation.openDrawer()}>
                     <Icon
                       size={28}
                       color="white"
                       name="menu"
-                      style={{marginStart: 12}}
+                      style={{ marginStart: 12 }}
                     />
                   </TouchableOpacity>
                 </View>

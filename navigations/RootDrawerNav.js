@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import { StyleSheet } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import FlashMessage from 'react-native-flash-message';
 import MainStackNav from './MainStackNav';
 import CustomDrawerContent from './CustomDrawerContent';
